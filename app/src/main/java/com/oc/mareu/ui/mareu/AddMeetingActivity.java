@@ -7,10 +7,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.oc.mareu.R;
+import com.oc.mareu.service.MeetingApiService;
 
 import java.util.Objects;
 
 public class AddMeetingActivity extends AppCompatActivity {
+
+    private MeetingApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,4 +41,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinnerColor.setAdapter(adapterColor);
     }
+
+
 }

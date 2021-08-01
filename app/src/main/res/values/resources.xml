@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinner_room">
+        <item>choisissez votre salle</item>
         <item>Réunion A</item>
         <item>Réunion B</item>
         <item>Réunion C</item>
@@ -14,6 +15,7 @@
     </string-array>
 
     <string-array name="spinner_color">
+        <item>choisissez votre couleur</item>
         <item>Vert</item>
         <item>Rouge</item>
         <item>Orange</item>
