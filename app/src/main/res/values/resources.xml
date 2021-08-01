@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_room">
+        <item>Réunion A</item>
+        <item>Réunion B</item>
+        <item>Réunion C</item>
+        <item>Réunion D</item>
+        <item>Réunion E</item>
+        <item>Réunion F</item>
+        <item>Réunion G</item>
+        <item>Réunion H</item>
+        <item>Réunion I</item>
+        <item>Réunion J</item>
+    </string-array>
+
+    <string-array name="spinner_color">
+        <item>Vert</item>
+        <item>Rouge</item>
+        <item>Orange</item>
+    </string-array>
+</resources>
