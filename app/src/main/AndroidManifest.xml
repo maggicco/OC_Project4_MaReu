@@ -11,7 +11,8 @@
         android:theme="@style/Theme.MaReu">
         <activity
             android:name=".ui.mareu.AddMeetingActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ui.mareu.ListMeetingActivity"/>
         <activity
             android:name=".ui.mareu.ListMeetingActivity"
             android:exported="true">

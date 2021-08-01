@@ -22,7 +22,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:contentDescription="@string/add_button"
+        android:contentDescription="add_button"
         android:focusable="true"
         android:src="@drawable/ic_baseline_add_circle_24"
         app:layout_constraintBottom_toBottomOf="parent"
