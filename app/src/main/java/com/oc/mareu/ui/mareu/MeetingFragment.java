@@ -1,14 +1,26 @@
 package com.oc.mareu.ui.mareu;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.oc.mareu.R;
+import com.oc.mareu.di.DI;
+import com.oc.mareu.event.DeleteMeetingEvent;
+import com.oc.mareu.model.Meeting;
+import com.oc.mareu.service.MeetingApiService;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,50 +29,69 @@ import com.oc.mareu.R;
  */
 public class MeetingFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MeetingFragment() {
-        // Required empty public constructor
-    }
+    private MeetingApiService mApiService;
+    private List<Meeting> mMeetings;
+    private RecyclerView mRecyclerView;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MeetingFragment.
+     * Create and return a new instance
+     * @return @{@link MeetingFragment}
      */
-    // TODO: Rename and change types and number of parameters
-    public static MeetingFragment newInstance(String param1, String param2) {
+    public static MeetingFragment newInstance() {
         MeetingFragment fragment = new MeetingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mApiService = DI.getMeetingApiService();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meeting, container, false);
+        View view = inflater.inflate(R.layout.fragment_meeting_list, container, false);
+
+//        Context context = view.getContext();
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        mRecyclerView = (RecyclerView) view;
+        return view;
     }
+
+    /**
+     * Init the List of meetings
+     */
+    private void initList() {
+        mMeetings = mApiService.getMeetings();
+        mRecyclerView.setAdapter(new ListMeetingRecyclerViewAdapter(mRecyclerView.getContext(), mMeetings));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+    /**
+     * Fired if the user clicks on a delete button
+     * @param event
+     */
+    @Subscribe
+    public void onDeleteNeighbour(DeleteMeetingEvent event) {
+        mApiService.deleteMeeting(event.meeting);
+        initList();
+    }
+
+
 }
