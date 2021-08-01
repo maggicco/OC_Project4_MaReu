@@ -64,6 +64,12 @@ public class AddMeetingActivity extends AppCompatActivity {
 //                R.layout.support_simple_spinner_dropdown_item, R.id.spinner_color);
 //        adapterRoom.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
+        String stateee = colorSpinner.getSelectedItem().toString();
+        String roo = roomSpinner.getSelectedItem().toString();
+        String mm = meetingDate.getText().toString();
+        String hh = meetingHour.getText().toString();
+        String cr = meetingCreator.getText().toString();
+        String mem = meetingMembers.getText().toString();
 
         addMeeting = findViewById(R.id.button_add_meeting);
         addMeeting.setOnClickListener(new View.OnClickListener() {
@@ -73,12 +79,14 @@ public class AddMeetingActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), meetingDate.getText().toString(), Toast.LENGTH_SHORT).show();
                 Meeting newMeeting = new Meeting(
 
-                        colorSpinner.getSelectedItem().toString(),
-                        roomSpinner.getSelectedItem().toString(),
-                        meetingDate.getText().toString(),
-                        meetingHour.getText().toString(),
-                        meetingCreator.getText().toString(),
-                        meetingMembers.getText().toString()
+                        stateee,
+                        roo,
+                        mm,
+                        hh,
+                        cr,
+                        mem
+
+
 
                 );
 

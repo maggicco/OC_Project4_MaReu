@@ -46,14 +46,15 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
 
         Meeting meeting = mMeetings.get(position);
 
-        if (meeting.getColor() == "green") {
+        if (meeting.getColor() == "vert") {
             holder.mColor.setImageResource(R.drawable.ic_circle_green_1_24);
         }
-        else if (meeting.getColor() == "orange") {
+        if (meeting.getColor() == "orange") {
             holder.mColor.setImageResource(R.drawable.ic_circle_lightorange_1_24);
         }
-        else
+        if (meeting.getColor() == "rouge") {
             holder.mColor.setImageResource(R.drawable.ic_circle_red_1_24);
+        }
 
         holder.mRoom.setText(meeting.getRoomName());
         holder.mHour.setText(meeting.getHour());

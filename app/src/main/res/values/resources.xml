@@ -3,9 +3,9 @@
 
     <string-array name="spinner_color">
         <item>choisissez votre couleur</item>
-        <item>Vert</item>
-        <item>Rouge</item>
-        <item>Orange</item>
+        <item>vert</item>
+        <item>rouge</item>
+        <item>orange</item>
     </string-array>
 
     <string-array name="spinner_room">
