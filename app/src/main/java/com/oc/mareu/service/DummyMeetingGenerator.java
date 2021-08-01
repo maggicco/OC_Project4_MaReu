@@ -11,10 +11,14 @@ import java.util.List;
 public class DummyMeetingGenerator {
 
     public static List<Meeting> DUMMY_MEETINGS = Arrays.asList(
+            new Meeting("green", "Reunion A -", " 14-07-2022 -", " 14:45 - ",
+                    "BigYo", "magà@ht.fr"),
+            new Meeting("red", "Reunion B", "09-09-2021", "08:45",
+                    "BigMdf", "logos@ht.fr"),
             new Meeting("green", "Reunion A", "14-07-2022", "14:45",
                     "BigYo", "magà@ht.fr"),
             new Meeting("red", "Reunion B", "09-09-2021", "08:45",
-                    "BigYo", "logos@ht.fr")
+                    "BigMdf", "logos@ht.fr")
     );
 
     static List<Meeting> generateMeetings() {

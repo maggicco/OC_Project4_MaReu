@@ -34,6 +34,12 @@ public class MeetingFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     /**
+     * Constructor
+     */
+    public MeetingFragment() {
+    }
+
+    /**
      * Create and return a new instance
      * @return @{@link MeetingFragment}
      */
@@ -51,10 +57,9 @@ public class MeetingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meeting_list, container, false);
-
-//        Context context = view.getContext();
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         return view;
     }
 
@@ -63,7 +68,7 @@ public class MeetingFragment extends Fragment {
      */
     private void initList() {
         mMeetings = mApiService.getMeetings();
-        mRecyclerView.setAdapter(new ListMeetingRecyclerViewAdapter(mRecyclerView.getContext(), mMeetings));
+        mRecyclerView.setAdapter(new ListMeetingRecyclerViewAdapter(mMeetings));
     }
 
     @Override
@@ -83,6 +88,7 @@ public class MeetingFragment extends Fragment {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
     /**
      * Fired if the user clicks on a delete button
      * @param event
@@ -92,6 +98,4 @@ public class MeetingFragment extends Fragment {
         mApiService.deleteMeeting(event.meeting);
         initList();
     }
-
-
 }

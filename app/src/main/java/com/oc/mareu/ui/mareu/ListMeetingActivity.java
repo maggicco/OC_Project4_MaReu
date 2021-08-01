@@ -12,11 +12,7 @@ import com.oc.mareu.R;
 
 public class ListMeetingActivity extends AppCompatActivity {
 
-//    private TabLayout tabLayout;
-//    private ViewPager mViewPager;
-//    private ListMeetingPageAdapter mPagerAdapter;
-
-    private ViewPager viewPager;
+    private ViewPager mPager;
     ListMeetingPagerAdapter mPagerAdapter;
 
     @Override
@@ -24,12 +20,10 @@ public class ListMeetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
 
-        viewPager = (ViewPager) findViewById(R.id.container);
+        mPager = (ViewPager) findViewById(R.id.container);
 
         mPagerAdapter = new ListMeetingPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(mPagerAdapter);
-
-
+        mPager.setAdapter(mPagerAdapter);
 
         FloatingActionButton fab = findViewById(R.id.add_meeting);
 
@@ -41,7 +35,4 @@ public class ListMeetingActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }
