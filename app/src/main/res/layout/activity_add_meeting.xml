@@ -41,8 +41,9 @@
                         android:minHeight="48dp"
                         tools:ignore="SpeakableTextPresentCheck" />
 
+
                     <EditText
-                        android:id="@+id/editTextTime2"
+                        android:id="@+id/editText_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -52,7 +53,7 @@
                         tools:ignore="SpeakableTextPresentCheck" />
 
                     <EditText
-                        android:id="@+id/editTextDate2"
+                        android:id="@+id/editText_hour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -62,7 +63,7 @@
                         tools:ignore="SpeakableTextPresentCheck" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName4"
+                        android:id="@+id/editTextText_creator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -71,7 +72,7 @@
                         android:hint="choisissez votre nom"/>
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName5"
+                        android:id="@+id/editTextText_member"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
