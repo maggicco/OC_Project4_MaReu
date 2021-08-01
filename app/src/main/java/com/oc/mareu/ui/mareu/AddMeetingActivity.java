@@ -3,6 +3,8 @@ package com.oc.mareu.ui.mareu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +42,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         mApiService = DI.getMeetingApiService();
         //init();
+        setColorSpinner();
+        setRoomSpinner();
 
         colorSpinner = findViewById(R.id.spinner_color);
         roomSpinner = findViewById(R.id.spinner_room);
@@ -48,8 +52,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingCreator = findViewById(R.id.editTextText_creator);
         meetingMembers = findViewById(R.id.editTextText_member);
 
-        final String[] spinnerColor = new String[1];
-        final String[] spinnerRoom = new String[1];
+
 
 
 
@@ -67,11 +70,11 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                //Toast.makeText(getApplicationContext(), meetingDate.getText().toString(), Toast.LENGTH_SHORT).show();
                 Meeting newMeeting = new Meeting(
 
-                        spinnerColor[0] = colorSpinner.getSelectedItem().toString(),
-                        spinnerRoom[0] = roomSpinner.getSelectedItem().toString(),
+                        colorSpinner.getSelectedItem().toString(),
+                        roomSpinner.getSelectedItem().toString(),
                         meetingDate.getText().toString(),
                         meetingHour.getText().toString(),
                         meetingCreator.getText().toString(),
@@ -79,14 +82,12 @@ public class AddMeetingActivity extends AppCompatActivity {
 
                 );
 
+
                 mApiService.createMeeting(newMeeting);
-                finish();
+                //finish();
                 //addNewMeeting();
             }
         });
-
-        setColorSpinner();
-        setRoomSpinner();
 
     }
 
@@ -114,6 +115,18 @@ public class AddMeetingActivity extends AppCompatActivity {
 //        finish();
 //
 //    }
+
+//    private void init() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+//            @Override
+//            public void afterTextChanged(Editable s){
+//            (R.id.button_add_meeting).setEnabled(s.length() > 0);
+//        }
+//        };
 
     public void setColorSpinner() {
 
