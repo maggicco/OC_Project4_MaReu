@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaReu">
         <activity
+            android:name=".ui.mareu.AddMeetingActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.mareu.MainActivity"
             android:exported="true">
             <intent-filter>
