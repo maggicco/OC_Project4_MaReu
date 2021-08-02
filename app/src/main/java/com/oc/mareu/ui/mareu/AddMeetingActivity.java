@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.oc.mareu.R;
@@ -50,6 +53,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     private MeetingApiService mApiService;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingMembers = findViewById(R.id.editTextText_member);
         addMembers = findViewById(R.id.button_add_members);
 
+        /**
+         * DatePicker
+         */
+
         meetingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,16 +85,17 @@ public class AddMeetingActivity extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
-                DatePickerDialog dialog = new DatePickerDialog(
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
                         AddMeetingActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListener,
                         day, month, year
                 );
-                //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.getDatePicker().setMinDate(System.currentTimeMillis());
-                dialog.show();
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
             }
+
         });
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -99,8 +108,48 @@ public class AddMeetingActivity extends AppCompatActivity {
                 meetingDate.setText(date);
 
             }
+
         };
 
+
+        /**
+         * Timepicker
+         */
+        meetingHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        AddMeetingActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mTimeSetListener,
+                        hour, minute, true
+                );
+
+                timePickerDialog.show();
+
+            }
+        });
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                //Log.d(TAG, "onTimeSet: hh-mm" + minute + "-" + hourOfDay);
+
+                String date = hourOfDay + "-" + minute;
+                meetingHour.setText(date);
+
+            }
+        };
+
+        /**
+         * add>NewMeeting
+         */
         addMeeting = findViewById(R.id.button_add_meeting);
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +161,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * addNewMeeting method
+     */
     public void addNewMeeting() {
 
         colorSpinner = findViewById(R.id.spinner_color);
@@ -130,13 +182,18 @@ public class AddMeetingActivity extends AppCompatActivity {
                 meetingHour.getText().toString(),
                 meetingCreator.getText().toString(),
                 meetingMembers.getText().toString()
+
                 );
+
         mApiService.createMeeting(newMeeting);
         finish();
 
     }
 
 
+    /**
+     * setColorSpinner method
+     */
     public void setColorSpinner() {
 
         Spinner spinnerColor = (Spinner) findViewById(R.id.spinner_color);
@@ -150,6 +207,9 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * setRoomSpinner method
+     */
     public void setRoomSpinner() {
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner_room);
