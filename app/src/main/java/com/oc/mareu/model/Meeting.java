@@ -15,22 +15,22 @@ public class Meeting {
     private String hour;
 
     /** Creator */
-    private String creator;
+    private String meetingCreator;
 
-    // TODO: 01/08/2021   Declare set of strings 
+    // TODO: 01/08/2021   Declare set of strings (TreeSet) implements Comparable
     /** Member */
-    private String member;
+    private String members;
 
     /**
      * Constructor
      */
-    public Meeting(String color, String roomName, String date, String hour, String creator, String member) {
+    public Meeting(String color, String roomName, String date, String hour, String meetingCreator, String members) {
         this.color = color;
         this.roomName = roomName;
         this.date = date;
         this.hour = hour;
-        this.creator = creator;
-        this.member = member;
+        this.meetingCreator = meetingCreator;
+        this.members = members;
     }
 
     /**
@@ -69,19 +69,19 @@ public class Meeting {
         this.hour = hour;
     }
 
-    public String getCreator() {
-        return creator;
+    public String getMeetingCreator() {
+        return meetingCreator;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setMeetingCreator(String meetingCreator) {
+        this.meetingCreator = meetingCreator;
     }
 
-    public String getMember() {
-        return member;
+    public String getMembers() {
+        return members;
     }
 
-    public void setMember(String member) {
-        this.member = member;
+    public void setMembers(String members) {
+        this.members = members;
     }
 }

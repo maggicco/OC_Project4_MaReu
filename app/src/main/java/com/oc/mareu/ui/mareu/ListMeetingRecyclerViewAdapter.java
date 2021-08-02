@@ -1,5 +1,6 @@
 package com.oc.mareu.ui.mareu;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
     }
 
     @Override
-    public void onBindViewHolder(ListMeetingRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ListMeetingRecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Meeting meeting = mMeetings.get(position);
 
@@ -58,17 +59,21 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
 
         holder.mRoom.setText(meeting.getRoomName());
         holder.mHour.setText(meeting.getHour());
-        holder.mCreator.setText(meeting.getCreator());
-        holder.mMember.setText(meeting.getMember());
+        holder.mCreator.setText(meeting.getMeetingCreator());
+        holder.mMember.setText(meeting.getMembers());
 
         // TODO: 01/08/2021 delete item to fix 
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
+                notifyItemRemoved(position);
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -88,8 +93,8 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mColor = (ImageView) itemView.findViewById(R.id.item_room_color);
-            mRoom = (TextView) itemView.findViewById(R.id.item_room_name);
+            mColor = itemView.findViewById(R.id.item_room_color);
+            mRoom = itemView.findViewById(R.id.item_room_name);
             mHour = itemView.findViewById(R.id.item_room_hour);
             mCreator = itemView.findViewById(R.id.item_room_creator);
             mMember = itemView.findViewById(R.id.item_room_members);

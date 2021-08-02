@@ -2,6 +2,7 @@ package com.oc.mareu.service;
 
 import com.oc.mareu.model.Meeting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class DummyMeetingApiService implements MeetingApiService {
 
-    private List<Meeting> meetings = DummyMeetingGenerator.generateMeetings();
+    private List<Meeting> meetings = new ArrayList<>();
 
     @Override
     public List<Meeting> getMeetings() {

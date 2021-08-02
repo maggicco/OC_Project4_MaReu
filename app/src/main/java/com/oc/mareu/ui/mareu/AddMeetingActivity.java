@@ -1,6 +1,7 @@
 package com.oc.mareu.ui.mareu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -18,6 +20,9 @@ import com.oc.mareu.di.DI;
 import com.oc.mareu.model.Meeting;
 import com.oc.mareu.service.MeetingApiService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class AddMeetingActivity extends AppCompatActivity {
@@ -31,6 +36,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     private EditText meetingCreator;
     private EditText meetingMembers;
     private Button addMeeting;
+    private Button addMembers;
 
     private MeetingApiService mApiService;
 
@@ -41,7 +47,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         //Back Home arrow
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mApiService = DI.getMeetingApiService();
-        //init();
         setColorSpinner();
         setRoomSpinner();
 
@@ -51,90 +56,43 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingHour = findViewById(R.id.editText_hour);
         meetingCreator = findViewById(R.id.editTextText_creator);
         meetingMembers = findViewById(R.id.editTextText_member);
-
-
-
-
-
-//        ArrayAdapter adapterColor = new ArrayAdapter(getApplicationContext(),
-//                R.layout.support_simple_spinner_dropdown_item, R.id.spinner_color);
-//        adapterColor.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-//
-//        ArrayAdapter adapterRoom = new ArrayAdapter(getApplicationContext(),
-//                R.layout.support_simple_spinner_dropdown_item, R.id.spinner_color);
-//        adapterRoom.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-
-        String stateee = colorSpinner.getSelectedItem().toString();
-        String roo = roomSpinner.getSelectedItem().toString();
-        String mm = meetingDate.getText().toString();
-        String hh = meetingHour.getText().toString();
-        String cr = meetingCreator.getText().toString();
-        String mem = meetingMembers.getText().toString();
+        addMembers = findViewById(R.id.button_add_members);
 
         addMeeting = findViewById(R.id.button_add_meeting);
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Toast.makeText(getApplicationContext(), meetingDate.getText().toString(), Toast.LENGTH_SHORT).show();
-                Meeting newMeeting = new Meeting(
+                addNewMeeting();
 
-                        stateee,
-                        roo,
-                        mm,
-                        hh,
-                        cr,
-                        mem
-
-
-
-                );
-
-
-                mApiService.createMeeting(newMeeting);
-                //finish();
-                //addNewMeeting();
             }
         });
+    }
+
+    public void addNewMeeting() {
+
+        colorSpinner = findViewById(R.id.spinner_color);
+        roomSpinner = findViewById(R.id.spinner_room);
+        meetingDate = findViewById(R.id.editText_date);
+        meetingHour = findViewById(R.id.editText_hour);
+        meetingCreator = findViewById(R.id.editTextText_creator);
+        meetingMembers = findViewById(R.id.editTextText_member);
+
+
+        Meeting newMeeting = new Meeting(
+
+                colorSpinner.getSelectedItem().toString(),
+                roomSpinner.getSelectedItem().toString(),
+                meetingDate.getText().toString(),
+                meetingHour.getText().toString(),
+                meetingCreator.getText().toString(),
+                meetingMembers.getText().toString()
+                );
+        mApiService.createMeeting(newMeeting);
+        finish();
 
     }
 
-//    public void addNewMeeting() {
-//
-//        String spinnerColor;
-//        String spinnerRoom;
-//
-//        colorSpinner = findViewById(R.id.spinner_color);
-//        roomSpinner = findViewById(R.id.spinner_room);
-//        meetingDate = findViewById(R.id.editText_date);
-//        meetingHour = findViewById(R.id.editText_hour);
-//        meetingCreator = findViewById(R.id.editTextText_creator);
-//        meetingMembers = findViewById(R.id.editTextText_member);
-//
-//
-//        Meeting newMeeting = new Meeting(
-//
-//                spinnerColor = colorSpinner.getSelectedItem().toString(),
-//                spinnerRoom = roomSpinner.getSelectedItem().toString(),
-//                meetingDate.getEditableText().getText().toString()
-//
-//        );
-//        mApiService.createMeeting(newMeeting);
-//        finish();
-//
-//    }
-
-//    private void init() {
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-//            @Override
-//            public void afterTextChanged(Editable s){
-//            (R.id.button_add_meeting).setEnabled(s.length() > 0);
-//        }
-//        };
 
     public void setColorSpinner() {
 
