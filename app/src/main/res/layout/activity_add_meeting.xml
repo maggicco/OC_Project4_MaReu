@@ -43,8 +43,8 @@
                         tools:ignore="SpeakableTextPresentCheck" />
 
 
-                    <EditText
-                        android:id="@+id/editText_date"
+                    <TextView
+                        android:id="@+id/textView_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -52,8 +52,8 @@
                         android:hint="choisissez la date"
                         tools:ignore="SpeakableTextPresentCheck" />
 
-                    <EditText
-                        android:id="@+id/editText_hour"
+                    <TextView
+                        android:id="@+id/textView_hour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -85,8 +85,8 @@
                         android:layout_height="wrap_content"
                         android:text="Add members" />
 
-                    <view class="androidx.appcompat.app.AlertController$RecycleListView"
-                        android:id="@+id/recyclerView_setMembers"
+                    <ListView class="androidx.appcompat.app.AlertController$RecycleListView"
+                        android:id="@+id/listView_seeMembers"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />

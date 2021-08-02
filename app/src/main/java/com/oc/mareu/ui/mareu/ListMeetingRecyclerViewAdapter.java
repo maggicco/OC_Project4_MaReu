@@ -1,7 +1,6 @@
 package com.oc.mareu.ui.mareu;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.oc.mareu.R;
 import com.oc.mareu.event.DeleteMeetingEvent;
 import com.oc.mareu.model.Meeting;
-import com.oc.mareu.service.MeetingApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,11 +21,12 @@ import java.util.List;
 
 public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMeetingRecyclerViewAdapter.ViewHolder> {
 
-    private MeetingApiService mApiService;
     private final List<Meeting> mMeetings;
 
     public ListMeetingRecyclerViewAdapter(List<Meeting> mMeetings) {
+
         this.mMeetings = mMeetings;
+
     }
 
     @NonNull
@@ -38,7 +37,7 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
         view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_meeting, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-        return (ViewHolder) viewHolder;
+        return viewHolder;
 
     }
 
@@ -50,11 +49,11 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
         if (meeting.getColor() == "vert") {
             holder.mColor.setImageResource(R.drawable.ic_circle_green_1_24);
         }
-        if (meeting.getColor() == "orange") {
-            holder.mColor.setImageResource(R.drawable.ic_circle_lightorange_1_24);
-        }
         if (meeting.getColor() == "rouge") {
             holder.mColor.setImageResource(R.drawable.ic_circle_red_1_24);
+        }
+        if (meeting.getColor() == "orange") {
+            holder.mColor.setImageResource(R.drawable.ic_circle_lightorange_1_24);
         }
 
         holder.mRoom.setText(meeting.getRoomName());
@@ -62,7 +61,6 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
         holder.mCreator.setText(meeting.getMeetingCreator());
         holder.mMember.setText(meeting.getMembers());
 
-        // TODO: 01/08/2021 delete item to fix 
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +86,6 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
         private TextView mCreator;
         private TextView mMember;
         private ImageButton mDelete;
-
 
         public ViewHolder(View itemView) {
             super(itemView);

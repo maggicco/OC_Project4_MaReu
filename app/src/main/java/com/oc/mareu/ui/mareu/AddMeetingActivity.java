@@ -3,6 +3,7 @@ package com.oc.mareu.ui.mareu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oc.mareu.R;
@@ -22,6 +24,7 @@ import com.oc.mareu.service.MeetingApiService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,15 +33,16 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     private Spinner colorSpinner;
     private Spinner roomSpinner;
-    private EditText meetingRoom;
-    private EditText meetingDate;
-    private EditText meetingHour;
+    private TextView meetingDate;
+    private TextView meetingHour;
     private EditText meetingCreator;
     private EditText meetingMembers;
     private Button addMeeting;
     private Button addMembers;
 
     private MeetingApiService mApiService;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +56,21 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         colorSpinner = findViewById(R.id.spinner_color);
         roomSpinner = findViewById(R.id.spinner_room);
-        meetingDate = findViewById(R.id.editText_date);
-        meetingHour = findViewById(R.id.editText_hour);
+        meetingDate = findViewById(R.id.textView_date);
+        meetingHour = findViewById(R.id.textView_hour);
         meetingCreator = findViewById(R.id.editTextText_creator);
         meetingMembers = findViewById(R.id.editTextText_member);
         addMembers = findViewById(R.id.button_add_members);
+
+        meetingDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+            }
+        });
 
         addMeeting = findViewById(R.id.button_add_meeting);
         addMeeting.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +87,8 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         colorSpinner = findViewById(R.id.spinner_color);
         roomSpinner = findViewById(R.id.spinner_room);
-        meetingDate = findViewById(R.id.editText_date);
-        meetingHour = findViewById(R.id.editText_hour);
+        meetingDate = findViewById(R.id.textView_date);
+        meetingHour = findViewById(R.id.textView_hour);
         meetingCreator = findViewById(R.id.editTextText_creator);
         meetingMembers = findViewById(R.id.editTextText_member);
 
