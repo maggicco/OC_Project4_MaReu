@@ -55,6 +55,12 @@ public class AddMeetingActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
 
+    private ListView list;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> arrayList;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +78,31 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingCreator = findViewById(R.id.editTextText_creator);
         meetingMembers = findViewById(R.id.editTextText_member);
         addMembers = findViewById(R.id.button_add_members);
+
+        /**
+         *  ListView
+         */
+        list = findViewById(R.id.listView_seeMembers);
+        arrayList = new ArrayList<String>();
+
+        // Adapter: You need three parameters 'the context, id of the layout (it will be where the data is shown),
+        // and the array that contains the data
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
+
+        //set the data in your ListView
+        list.setAdapter(adapter);
+
+        addMembers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //adds the data of your EditText and puts in your array
+                arrayList.add(meetingMembers.getText().toString());
+                //check if your adapter has changed
+                adapter.notifyDataSetChanged();
+            }
+        });
+
 
         /**
          * DatePicker
