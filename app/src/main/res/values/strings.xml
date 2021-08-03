@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">MaReu</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">MaRéu</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello !!World!</string>
+    <string name="filter_string">Filtrer les réunions par date ou par lieu</string>
+    <string name="filtrer">Filtrer</string>
+    <string name="Filtrer">filter</string>
 </resources>

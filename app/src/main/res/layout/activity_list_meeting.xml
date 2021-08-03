@@ -7,21 +7,52 @@
     android:layout_height="match_parent"
     tools:context=".ui.mareu.ListMeetingActivity">
 
+    <!-- TODO fix appBar to expand it -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_filter_list_white_24">
 
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_baseline_filter_list_white_24"
 
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            />
+            style="@style/Widget.MaterialComponents.Toolbar.Primary">
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_string"/>
+
+            <Spinner
+                android:id="@+id/spinner_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="Color"
+                android:minHeight="32dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Filtrer"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Filtrer"/>
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
 
     </com.google.android.material.appbar.AppBarLayout>
