@@ -13,7 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
 
@@ -21,11 +23,14 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     private ViewPager mPager;
     ListMeetingPagerAdapter mPagerAdapter;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
+        
+        //mToolbar = findViewById(R.id.my_toolbar);
 
         mPager = (ViewPager) findViewById(R.id.container);
 
