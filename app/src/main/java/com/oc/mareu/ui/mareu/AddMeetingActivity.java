@@ -37,8 +37,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeSet;
 
-public class AddMeetingActivity extends AppCompatActivity {
+public class AddMeetingActivity extends AppCompatActivity implements Comparable{
 
 
     private Spinner colorSpinner;
@@ -49,13 +50,14 @@ public class AddMeetingActivity extends AppCompatActivity {
     private EditText meetingMembers;
     private Button addMeeting;
     private Button addMembers;
+    private Button showSet;
 
     private MeetingApiService mApiService;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
 
-    private ListView list;
+    private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
 
@@ -82,7 +84,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         /**
          *  ListView
          */
-        list = findViewById(R.id.listView_seeMembers);
+        listView = findViewById(R.id.listView_seeMembers);
         arrayList = new ArrayList<String>();
 
         // Adapter: You need three parameters 'the context, id of the layout (it will be where the data is shown),
@@ -90,7 +92,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
 
         //set the data in your ListView
-        list.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
         addMembers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,40 @@ public class AddMeetingActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * get listView items to string
+         */
+
+        TreeSet<String> treeSet = new TreeSet<>(arrayList);
+        showSet = findViewById(R.id.button_show_set);
+        showSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(AddMeetingActivity.this, (CharSequence) treeSet, Toast.LENGTH_LONG).show();
+                TreeSet<String> treeSet = new TreeSet<>();
+                for (String multiMember: arrayList) {
+                    treeSet.add(multiMember);
+            //Toast.makeText(getApplicationContext(), multiMember, Toast.LENGTH_SHORT).show();
+        }
+                Toast.makeText(getApplicationContext(), (CharSequence) treeSet, Toast.LENGTH_LONG).show();
+            }
+        });
+//        for (String multiMember: arrayList) {
+//            Toast.makeText(getApplicationContext(), multiMember, Toast.LENGTH_SHORT).show();
+//        }
+//        TreeSet<String> treeSet = new TreeSet<>(arrayList);
+////                for (String multiMember: arrayList) {
+////                    treeSet.add(multiMember);
+////
+////                }
+//        Toast.makeText(getApplicationContext(), (CharSequence) treeSet, Toast.LENGTH_LONG).show();
+
+        //                TreeSet<String> treeSet = new TreeSet<>(arrayList);
+////                for (String multiMember: arrayList) {
+////                    treeSet.add(multiMember);
+////
+////                }
+//                Toast.makeText(getApplicationContext(), (CharSequence) treeSet, Toast.LENGTH_LONG).show();
 
         /**
          * DatePicker
@@ -254,4 +290,8 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }

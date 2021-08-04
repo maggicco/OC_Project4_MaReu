@@ -1,6 +1,6 @@
 package com.oc.mareu.model;
 
-public class Meeting {
+public class Meeting implements Comparable<Meeting>{
 
     /** Color */
     private String color;
@@ -83,5 +83,10 @@ public class Meeting {
 
     public void setMembers(String members) {
         this.members = members;
+    }
+
+    @Override
+    public int compareTo(Meeting o) {
+        return 0;
     }
 }
