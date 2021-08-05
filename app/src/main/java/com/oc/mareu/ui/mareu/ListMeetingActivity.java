@@ -2,20 +2,26 @@ package com.oc.mareu.ui.mareu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
 
@@ -23,14 +29,14 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     private ViewPager mPager;
     ListMeetingPagerAdapter mPagerAdapter;
-    Toolbar mToolbar;
+    LinearLayout hiddenView;
+    CardView cardView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
-        
-        //mToolbar = findViewById(R.id.my_toolbar);
 
         mPager = (ViewPager) findViewById(R.id.container);
 
@@ -46,7 +52,11 @@ public class ListMeetingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
+
+
 
 
     @Override
@@ -59,7 +69,34 @@ public class ListMeetingActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.action_menu:
+            case R.id.filter_menu:
+                cardView = findViewById(R.id.base_cardview);
+
+                hiddenView = findViewById(R.id.hidden_view);
+
+                        // If the CardView is already expanded, set its visibility
+                        //  to gone and change the expand less icon to expand more.
+                        if (hiddenView.getVisibility() == View.VISIBLE) {
+
+                            // The transition of the hiddenView is carried out
+                            //  by the TransitionManager class.
+                            // Here we use an object of the AutoTransition
+                            // Class to create a default transition.
+                            TransitionManager.beginDelayedTransition(cardView,
+                                    new AutoTransition());
+                            hiddenView.setVisibility(View.GONE);
+
+                        }
+
+                        // If the CardView is not expanded, set its visibility
+                        // to visible and change the expand more icon to expand less.
+                        else {
+
+                            TransitionManager.beginDelayedTransition(cardView,
+                                    new AutoTransition());
+                            hiddenView.setVisibility(View.VISIBLE);
+
+                        }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
