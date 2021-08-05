@@ -5,25 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
+import com.oc.mareu.di.DI;
+import com.oc.mareu.model.Meeting;
+import com.oc.mareu.service.MeetingApiService;
+
+import java.util.List;
 
 public class ListMeetingActivity extends AppCompatActivity {
 
@@ -31,7 +29,9 @@ public class ListMeetingActivity extends AppCompatActivity {
     ListMeetingPagerAdapter mPagerAdapter;
     LinearLayout hiddenView;
     CardView cardView;
-
+    List<Meeting> mMeeting;
+    private MeetingApiService mApiService;
+    //impor DI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +52,7 @@ public class ListMeetingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,22 +96,30 @@ public class ListMeetingActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     // TODO: 03/08/2021 restart activity after orientation changed
     @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        onRestart();
+        //onRestart();
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-                    onDestroy();
+                    onRestart();
+            // TODO: 05/08/2021 clean list button add doesn't work
+            mApiService = DI.getMeetingApiService();
+            mApiService.getMeetings().clear();
+                    //onDestroy();
         }
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-//        }
-        //setContentView(R.layout.activity_list_meeting);
+         else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+            onRestart();
+            // TODO: 05/08/2021 clean list
+            mApiService = DI.getMeetingApiService();
+            mApiService.getMeetings().clear();
+            //onDestroy();
+        }
+        setContentView(R.layout.activity_list_meeting);
     }
 }

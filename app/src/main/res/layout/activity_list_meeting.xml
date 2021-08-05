@@ -23,13 +23,7 @@
             android:id="@+id/base_cardview"
             style="@style/Base.CardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.473"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.021">
+            android:layout_height="wrap_content">
 
             <!--The following is the expandable portion whose
                 visibility is initially set to 'gone'.
@@ -40,11 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fixed_layout">
+                android:visibility="gone">
 
                 <!--Child LinearLayout 1-->
                 <LinearLayout
