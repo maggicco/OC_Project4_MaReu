@@ -85,11 +85,11 @@ public class AddMeetingActivity extends AppCompatActivity implements Comparable{
          *  ListView
          */
         listView = findViewById(R.id.listView_seeMembers);
-        arrayList = new ArrayList<String>();
+        arrayList = new ArrayList<>();
 
         // Adapter: You need three parameters 'the context, id of the layout (it will be where the data is shown),
         // and the array that contains the data
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
+        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
 
         //set the data in your ListView
         listView.setAdapter(adapter);
@@ -114,31 +114,17 @@ public class AddMeetingActivity extends AppCompatActivity implements Comparable{
         showSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(AddMeetingActivity.this, (CharSequence) treeSet, Toast.LENGTH_LONG).show();
-                TreeSet<String> treeSet = new TreeSet<>();
+                StringBuilder sbf = new
+                        StringBuilder("");
                 for (String multiMember: arrayList) {
-                    treeSet.add(multiMember);
+        /* Here it appends the char argument as
+        string to the StringBuilder */
+                    sbf.append(multiMember + " - ");
             //Toast.makeText(getApplicationContext(), multiMember, Toast.LENGTH_SHORT).show();
         }
-                Toast.makeText(getApplicationContext(), (CharSequence) treeSet, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
             }
         });
-//        for (String multiMember: arrayList) {
-//            Toast.makeText(getApplicationContext(), multiMember, Toast.LENGTH_SHORT).show();
-//        }
-//        TreeSet<String> treeSet = new TreeSet<>(arrayList);
-////                for (String multiMember: arrayList) {
-////                    treeSet.add(multiMember);
-////
-////                }
-//        Toast.makeText(getApplicationContext(), (CharSequence) treeSet, Toast.LENGTH_LONG).show();
-
-        //                TreeSet<String> treeSet = new TreeSet<>(arrayList);
-////                for (String multiMember: arrayList) {
-////                    treeSet.add(multiMember);
-////
-////                }
-//                Toast.makeText(getApplicationContext(), (CharSequence) treeSet, Toast.LENGTH_LONG).show();
 
         /**
          * DatePicker

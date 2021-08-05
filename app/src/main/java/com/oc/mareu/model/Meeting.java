@@ -1,6 +1,6 @@
 package com.oc.mareu.model;
 
-public class Meeting implements Comparable<Meeting>{
+public class Meeting{
 
     /** Color */
     private String color;
@@ -17,7 +17,6 @@ public class Meeting implements Comparable<Meeting>{
     /** Creator */
     private String meetingCreator;
 
-    // TODO: 01/08/2021   Declare set of strings (TreeSet) implements Comparable
     /** Member */
     private String members;
 
@@ -85,8 +84,4 @@ public class Meeting implements Comparable<Meeting>{
         this.members = members;
     }
 
-    @Override
-    public int compareTo(Meeting o) {
-        return 0;
-    }
 }
