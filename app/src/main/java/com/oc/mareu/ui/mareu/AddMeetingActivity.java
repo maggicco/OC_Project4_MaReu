@@ -63,6 +63,8 @@ public class AddMeetingActivity extends AppCompatActivity implements Comparable{
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +110,6 @@ public class AddMeetingActivity extends AppCompatActivity implements Comparable{
         /**
          * get listView items to string
          */
-
-        TreeSet<String> treeSet = new TreeSet<>(arrayList);
         showSet = findViewById(R.id.button_show_set);
         showSet.setOnClickListener(new View.OnClickListener() {
             @Override

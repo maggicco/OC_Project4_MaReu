@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.oc.mareu.R;
 import com.oc.mareu.event.DeleteMeetingEvent;
 import com.oc.mareu.model.Meeting;
+import com.oc.mareu.service.MeetingApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -22,6 +23,8 @@ import java.util.List;
 public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMeetingRecyclerViewAdapter.ViewHolder> {
 
     private final List<Meeting> mMeetings;
+    private MeetingApiService mApiService;
+
 
     public ListMeetingRecyclerViewAdapter(List<Meeting> mMeetings) {
 
@@ -45,6 +48,7 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
     public void onBindViewHolder(ListMeetingRecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Meeting meeting = mMeetings.get(position);
+
 
         if (meeting.getColor() == "vert") {
             holder.mColor.setImageResource(R.drawable.ic_circle_green_1_24);
