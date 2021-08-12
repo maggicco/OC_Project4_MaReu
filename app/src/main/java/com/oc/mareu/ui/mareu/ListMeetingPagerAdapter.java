@@ -6,9 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ListMeetingPagerAdapter extends FragmentPagerAdapter {
+
+    ArrayList<Meeting> mMeetings;
 
     public ListMeetingPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -32,4 +36,6 @@ public class ListMeetingPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         return MeetingFragment.newInstance();
     }
+
+
 }

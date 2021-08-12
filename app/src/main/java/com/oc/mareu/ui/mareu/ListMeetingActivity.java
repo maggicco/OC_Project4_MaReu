@@ -2,45 +2,64 @@ package com.oc.mareu.ui.mareu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+
+import android.view.Menu;
+
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
-import android.widget.EditText;
+
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+
+
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
 import com.oc.mareu.di.DI;
 import com.oc.mareu.model.Meeting;
+import com.oc.mareu.service.DummyMeetingApiService;
 import com.oc.mareu.service.MeetingApiService;
+import com.oc.mareu.ui.mareu.ListMeetingRecyclerViewAdapter;
 
-import java.util.Calendar;
-import java.util.List;
+
 
 public class ListMeetingActivity extends AppCompatActivity {
 
     private ViewPager mPager;
-    ListMeetingPagerAdapter mPagerAdapter;
-    LinearLayout hiddenView;
-    CardView cardView;
-    List<Meeting> mMeeting;
+    private ListMeetingPagerAdapter mPagerAdapter;
+    private LinearLayout hiddenView;
+    private CardView cardView;
+    private List<Meeting> mMeeting;
     private MeetingApiService mApiService;
-    private EditText date;
+    ListMeetingRecyclerViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
+
+        setRoomSpinner();
 
         mPager = findViewById(R.id.container);
 
@@ -56,85 +75,39 @@ public class ListMeetingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-        //Filters for date EditText
-        date = findViewById(R.id.editTextDateFilter);
-        date.addTextChangedListener(new TextWatcher() {
-            private String current = "";
-            private String ddmmyyyy = "DDMMYYYY";
-            private Calendar cal = Calendar.getInstance();
-
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().equals(current)) {
-                    String clean = s.toString().replaceAll("[^\\d.]", "");
-                    String cleanC = current.replaceAll("[^\\d.]", "");
-
-                    int cl = clean.length();
-                    int sel = cl;
-                    for (int i = 2; i <= cl && i < 6; i += 2) {
-                        sel++;
-                    }
-                    //Fix for pressing delete next to a forward slash
-                    if (clean.equals(cleanC)) sel--;
-
-                    if (clean.length() < 8){
-                        clean = clean + ddmmyyyy.substring(clean.length());
-                    }else{
-                        //This part makes sure that when we finish entering numbers
-                        //the date is correct, fixing it otherwise
-                        int day  = Integer.parseInt(clean.substring(0,2));
-                        int mon  = Integer.parseInt(clean.substring(2,4));
-                        int year = Integer.parseInt(clean.substring(4,8));
-
-                        if(mon > 12) mon = 12;
-                        cal.set(Calendar.MONTH, mon-1);
-
-                        year = (year<1900)?1900:(year>2100)?2100:year;
-                        cal.set(Calendar.YEAR, year);
-                        // ^ first set year for the line below to work correctly
-                        //with leap years - otherwise, date e.g. 29/02/2012
-                        //would be automatically corrected to 28/02/2012
-
-                        day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
-                        clean = String.format("%02d%02d%02d",day, mon, year);
-                    }
-
-                    clean = String.format("%s-%s-%s", clean.substring(0, 2),
-                            clean.substring(2, 4),
-                            clean.substring(4, 8));
-
-                    sel = sel < 0 ? 0 : sel;
-                    current = clean;
-                    date.setText(current);
-                    date.setSelection(sel < current.length() ? sel : current.length());
-
-                }
-            }
-
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_ressources, menu);
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_ressources, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.onActionViewCollapsed();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.filter_menu:
+            case R.id.action_search:
                 cardView = findViewById(R.id.base_cardview);
 
                 hiddenView = findViewById(R.id.hidden_view);
@@ -166,6 +139,7 @@ public class ListMeetingActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     // TODO: 03/08/2021 restart activity after orientation changed
@@ -177,7 +151,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
                     onRestart();
-            // TODO: 05/08/2021 clean list button add doesn't work
             mApiService = DI.getMeetingApiService();
             mApiService.getMeetings().clear();
                     //onDestroy();
@@ -185,11 +158,81 @@ public class ListMeetingActivity extends AppCompatActivity {
          else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
             Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
             onRestart();
-            // TODO: 05/08/2021 clean list
             mApiService = DI.getMeetingApiService();
             mApiService.getMeetings().clear();
             //onDestroy();
         }
         setContentView(R.layout.activity_list_meeting);
     }
+    ListView myListView;
+    Spinner mySpinner;
+
+
+    /**
+     * setRoomSpinner method
+     */
+    public void setRoomSpinner() {
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_room);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapterRoom = ArrayAdapter.createFromResource(this,
+                R.array.spinner_room, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapterRoom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapterRoom);
+
+    }
+
+//    /*
+//Initialize ListView and Spinner, set their adapters and listen to spinner itemSelection events
+//*/
+//    private void initializeViews() {
+//
+//        mySpinner = findViewById(R.id.spinner_room);
+//        mySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categories));
+//
+//        myListView.setAdapter((ListAdapter) mPagerAdapter);
+//
+//        //spinner selection events
+//        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long itemID) {
+//                if (position >= 0 && position < mySpinner..length) {
+//                    getSelectedCategoryData(position);
+//                } else {
+//                    Toast.makeText(ListMeetingActivity.this, "Selected Category Does not Exist!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//    }
+//    /*
+//Get the selected category's cosmic bodies and bind to ListView
+// */
+//    private void getSelectedCategoryData(int categoryID) {
+//        //arraylist to hold selected cosmic bodies
+//        ArrayList<Meeting> cosmicBodies = new ArrayList<>();
+//        if(categoryID == 0)
+//        {
+//            adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, new DummyMeetingApiService().getMeetings());
+//        }else{
+//            //filter by id
+//            for (Meeting cosmicBody : mMeeting) {
+//                if (cosmicBody.getRoomName() == mMeeting) {
+//                    cosmicBodies.add(cosmicBody);
+//                }
+//            }
+//            //instatiate adapter a
+//            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cosmicBodies);
+//        }
+//        //set the adapter to GridView
+//        myListView.setAdapter(adapter);
+//    }
+
+
+
 }

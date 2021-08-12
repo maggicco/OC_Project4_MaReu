@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,17 +20,23 @@ import com.oc.mareu.service.MeetingApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMeetingRecyclerViewAdapter.ViewHolder> {
+public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMeetingRecyclerViewAdapter.ViewHolder>
+implements Filterable{
 
-    private final List<Meeting> mMeetings;
-    private MeetingApiService mApiService;
+
+    private List<Meeting> mMeetings;
+    private List<Meeting> mMeetingsFullList;
+
 
 
     public ListMeetingRecyclerViewAdapter(List<Meeting> mMeetings) {
 
         this.mMeetings = mMeetings;
+        mMeetingsFullList = new ArrayList<>(mMeetings);
+
 
     }
 
@@ -50,13 +58,13 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
         Meeting meeting = mMeetings.get(position);
 
 
-        if (meeting.getColor() == "vert") {
+        if (meeting.getColor().equals("vert")) {
             holder.mColor.setImageResource(R.drawable.ic_circle_green_1_24);
         }
-        if (meeting.getColor() == "rouge") {
+        if (meeting.getColor().equals("rouge")) {
             holder.mColor.setImageResource(R.drawable.ic_circle_red_1_24);
         }
-        if (meeting.getColor() == "orange") {
+        if (meeting.getColor().equals("orange")) {
             holder.mColor.setImageResource(R.drawable.ic_circle_lightorange_1_24);
         }
 
@@ -74,8 +82,6 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
             }
         });
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -103,4 +109,39 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
 
         }
     }
+
+    // TODO: 12/08/2021 Filters to fix  
+    @Override
+    public Filter getFilter() {
+        return Searched_Filter;
+    }
+    private Filter Searched_Filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Meeting> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mMeetings);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Meeting item : mMeetings) {
+                    if (item.getRoomName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mMeetingsFullList.clear();
+            mMeetingsFullList.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 }
+
+
+

@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.TreeSet;
 
-public class AddMeetingActivity extends AppCompatActivity implements Comparable{
+public class AddMeetingActivity extends AppCompatActivity {
 
 
     private Spinner colorSpinner;
@@ -243,7 +243,6 @@ public class AddMeetingActivity extends AppCompatActivity implements Comparable{
 
     }
 
-
     /**
      * setColorSpinner method
      */
@@ -276,8 +275,5 @@ public class AddMeetingActivity extends AppCompatActivity implements Comparable{
 
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
+
 }
