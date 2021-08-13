@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuInflater;
@@ -51,7 +52,9 @@ public class ListMeetingActivity extends AppCompatActivity {
     private CardView cardView;
     private List<Meeting> mMeeting;
     private MeetingApiService mApiService;
-    ListMeetingRecyclerViewAdapter adapter;
+    //ListMeetingRecyclerViewAdapter adapter;
+    ArrayAdapter<Meeting> adapter;
+    String[] categories={"All","Réunion 1","Réunion 2"};
 
 
     @Override
@@ -65,6 +68,8 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         mPagerAdapter = new ListMeetingPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
+
 
         FloatingActionButton fab = findViewById(R.id.add_meeting);
 
@@ -88,12 +93,12 @@ public class ListMeetingActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                Log.d("newText1",query);
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                Log.d("newText",newText);
                 adapter.getFilter().filter(newText);
                 return false;
             }
@@ -184,54 +189,6 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     }
 
-//    /*
-//Initialize ListView and Spinner, set their adapters and listen to spinner itemSelection events
-//*/
-//    private void initializeViews() {
-//
-//        mySpinner = findViewById(R.id.spinner_room);
-//        mySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categories));
-//
-//        myListView.setAdapter((ListAdapter) mPagerAdapter);
-//
-//        //spinner selection events
-//        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long itemID) {
-//                if (position >= 0 && position < mySpinner..length) {
-//                    getSelectedCategoryData(position);
-//                } else {
-//                    Toast.makeText(ListMeetingActivity.this, "Selected Category Does not Exist!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-//    }
-//    /*
-//Get the selected category's cosmic bodies and bind to ListView
-// */
-//    private void getSelectedCategoryData(int categoryID) {
-//        //arraylist to hold selected cosmic bodies
-//        ArrayList<Meeting> cosmicBodies = new ArrayList<>();
-//        if(categoryID == 0)
-//        {
-//            adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, new DummyMeetingApiService().getMeetings());
-//        }else{
-//            //filter by id
-//            for (Meeting cosmicBody : mMeeting) {
-//                if (cosmicBody.getRoomName() == mMeeting) {
-//                    cosmicBodies.add(cosmicBody);
-//                }
-//            }
-//            //instatiate adapter a
-//            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cosmicBodies);
-//        }
-//        //set the adapter to GridView
-//        myListView.setAdapter(adapter);
-//    }
 
 
 

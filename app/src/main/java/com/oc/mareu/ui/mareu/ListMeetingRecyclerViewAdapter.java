@@ -29,6 +29,8 @@ implements Filterable{
 
     private List<Meeting> mMeetings;
     private List<Meeting> mMeetingsFullList;
+    private ArrayList<Meeting> dataSet;
+    private ArrayList<Meeting> FullList;
 
 
 
@@ -110,7 +112,36 @@ implements Filterable{
         }
     }
 
-    // TODO: 12/08/2021 Filters to fix  
+//    // TODO: 12/08/2021 Filters to fix
+//    @Override
+//    public Filter getFilter() {
+//        return Searched_Filter;
+//    }
+//    private Filter Searched_Filter = new Filter() {
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            ArrayList<Meeting> filteredList = new ArrayList<>();
+//            if (constraint == null || constraint.length() == 0) {
+//                filteredList.addAll(mMeetings);
+//            } else {
+//                String filterPattern = constraint.toString().toLowerCase().trim();
+//                for (Meeting item : mMeetings) {
+//                    if (item.getRoomName().toLowerCase().contains(filterPattern)) {
+//                        filteredList.add(item);
+//                    }
+//                }
+//            }
+//            FilterResults results = new FilterResults();
+//            results.values = filteredList;
+//            return results;
+//        }
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            mMeetingsFullList.clear();
+//            mMeetingsFullList.addAll((ArrayList) results.values);
+//            notifyDataSetChanged();
+//        }
+//    };
     @Override
     public Filter getFilter() {
         return Searched_Filter;
@@ -120,10 +151,10 @@ implements Filterable{
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Meeting> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mMeetings);
+                filteredList.addAll(mMeetingsFullList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Meeting item : mMeetings) {
+                for (Meeting item : mMeetingsFullList) {
                     if (item.getRoomName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
@@ -135,11 +166,12 @@ implements Filterable{
         }
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mMeetingsFullList.clear();
-            mMeetingsFullList.addAll((ArrayList) results.values);
+            mMeetings.clear();
+            mMeetings.addAll((ArrayList) results.values);
             notifyDataSetChanged();
         }
     };
+
 
 }
 
