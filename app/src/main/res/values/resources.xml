@@ -10,16 +10,16 @@
 
     <string-array name="spinner_room">
         <item>choisissez votre salle</item>
-        <item>Réunion 1</item>
-        <item>Réunion 2</item>
-        <item>Réunion 3</item>
-        <item>Réunion 4</item>
-        <item>Réunion 5</item>
-        <item>Réunion 6</item>
-        <item>Réunion 7</item>
-        <item>Réunion 8</item>
-        <item>Réunion 9</item>
-        <item>Réunion 10</item>
+        <item>Réunion A</item>
+        <item>Réunion B</item>
+        <item>Réunion C</item>
+        <item>Réunion D</item>
+        <item>Réunion E</item>
+        <item>Réunion F</item>
+        <item>Réunion G</item>
+        <item>Réunion H</item>
+        <item>Réunion I</item>
+        <item>Réunion J</item>
     </string-array>
 
     <string-array name="spinner_filter_room">

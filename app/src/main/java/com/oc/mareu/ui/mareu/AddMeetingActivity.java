@@ -119,7 +119,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                 for (String multiMember: arrayList) {
         /* Here it appends the char argument as
         string to the StringBuilder */
-                    sbf.append(multiMember + " - ");
+                    sbf.append(multiMember + " , ");
             //Toast.makeText(getApplicationContext(), multiMember, Toast.LENGTH_SHORT).show();
         }
                 Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
@@ -194,7 +194,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
                 //Log.d(TAG, "onTimeSet: hh-mm" + minute + "-" + hourOfDay);
 
-                String date = hourOfDay + "-" + minute;
+                String date = " - " + hourOfDay + "-" + minute + " - ";
                 meetingHour.setText(date);
 
             }
