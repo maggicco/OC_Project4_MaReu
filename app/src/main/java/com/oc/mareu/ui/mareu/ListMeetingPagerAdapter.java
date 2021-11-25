@@ -37,5 +37,4 @@ public class ListMeetingPagerAdapter extends FragmentPagerAdapter {
         return MeetingFragment.newInstance();
     }
 
-
 }

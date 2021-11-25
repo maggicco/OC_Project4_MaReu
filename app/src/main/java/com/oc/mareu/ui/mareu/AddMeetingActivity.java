@@ -51,22 +51,16 @@ public class AddMeetingActivity extends AppCompatActivity {
     private Button addMeeting;
     private Button addMembers;
     private Button showSet;
-
     private MeetingApiService mApiService;
-
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meeting);
         //Back Home arrow
@@ -104,6 +98,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                 arrayList.add(meetingMembers.getText().toString());
                 //check if your adapter has changed
                 adapter.notifyDataSetChanged();
+
             }
         });
 
@@ -114,13 +109,12 @@ public class AddMeetingActivity extends AppCompatActivity {
         showSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringBuilder sbf = new
-                        StringBuilder("");
+                StringBuilder sbf = new StringBuilder("");
+
                 for (String multiMember: arrayList) {
-        /* Here it appends the char argument as
-        string to the StringBuilder */
+                    /* Here it appends the char argument as
+                    string to the StringBuilder */
                     sbf.append(multiMember + " , ");
-            //Toast.makeText(getApplicationContext(), multiMember, Toast.LENGTH_SHORT).show();
         }
                 Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
             }
@@ -154,9 +148,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
                 month = month + 1;
                 Log.d(TAG, "onDateSet: dd/mm/yyy" + dayOfMonth + "/" + month + "/" +year);
-
                 String date = dayOfMonth + "/" + month + "/" + year;
                 meetingDate.setText(date);
 
@@ -193,7 +187,6 @@ public class AddMeetingActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
                 //Log.d(TAG, "onTimeSet: hh-mm" + minute + "-" + hourOfDay);
-
                 String date = " - " + hourOfDay + "-" + minute + " - ";
                 meetingHour.setText(date);
 
@@ -226,16 +219,13 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingCreator = findViewById(R.id.editTextText_creator);
         meetingMembers = findViewById(R.id.editTextText_member);
 
-
         Meeting newMeeting = new Meeting(
-
                 colorSpinner.getSelectedItem().toString(),
                 roomSpinner.getSelectedItem().toString(),
                 meetingDate.getText().toString(),
                 meetingHour.getText().toString(),
                 meetingCreator.getText().toString(),
                 meetingMembers.getText().toString()
-
                 );
 
         mApiService.createMeeting(newMeeting);

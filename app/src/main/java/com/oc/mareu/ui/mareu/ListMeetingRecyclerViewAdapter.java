@@ -26,19 +26,15 @@ import java.util.List;
 public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMeetingRecyclerViewAdapter.ViewHolder>
 implements Filterable{
 
-
     private List<Meeting> mMeetings;
     private List<Meeting> mMeetingsFullList;
     private ArrayList<Meeting> dataSet;
     private ArrayList<Meeting> FullList;
 
-
-
     public ListMeetingRecyclerViewAdapter(List<Meeting> mMeetings) {
 
         this.mMeetings = mMeetings;
         mMeetingsFullList = new ArrayList<>(mMeetings);
-
 
     }
 
@@ -58,7 +54,6 @@ implements Filterable{
     public void onBindViewHolder(ListMeetingRecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Meeting meeting = mMeetings.get(position);
-
 
         if (meeting.getColor().equals("vert")) {
             holder.mColor.setImageResource(R.drawable.ic_circle_green_1_24);
@@ -81,6 +76,7 @@ implements Filterable{
 
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
                 notifyItemRemoved(position);
+
             }
         });
     }
@@ -142,14 +138,18 @@ implements Filterable{
 //            notifyDataSetChanged();
 //        }
 //    };
+
     @Override
     public Filter getFilter() {
         return Searched_Filter;
     }
+
     private Filter Searched_Filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+
             ArrayList<Meeting> filteredList = new ArrayList<>();
+
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(mMeetingsFullList);
             } else {
@@ -160,19 +160,21 @@ implements Filterable{
                     }
                 }
             }
+
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
+
         }
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+
             mMeetings.clear();
             mMeetings.addAll((ArrayList) results.values);
             notifyDataSetChanged();
+
         }
     };
-
-
 }
 
 

@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.mareu.ListMeetingActivity">
 
-
-    <!-- TODO fix appBar to expand it -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/myAPPBAR"
         android:layout_width="match_parent"
@@ -26,9 +24,7 @@
             android:layout_height="wrap_content">
 
             <!--The following is the expandable portion whose
-                visibility is initially set to 'gone'.
-                The parent LinearLayout contains 3 child LinearLayouts
-                that hold a subject name and an icon each.-->
+                visibility is initially set to 'gone'.-->
             <LinearLayout
                 android:id="@+id/hidden_view"
                 android:layout_width="match_parent"
@@ -38,14 +34,14 @@
 
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textViewLieu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:layout_margin="20dp"
                     android:textStyle="bold"
                     android:textSize="20dp"
-                    android:text="Filtrer les réunions par lieu" />
+                    android:text="Filtrer des réunions par lieu" />
 
                 <Spinner
                     android:id="@+id/spinner_room"
@@ -54,6 +50,25 @@
                     android:minHeight="48dp"
                     android:layout_margin="10dp"
                     tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textViewFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_margin="20dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:text="Filtrer des réunions par date" />
+
+                <TextView
+                    android:id="@+id/textView_DateFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:minHeight="48dp"
+                    android:hint="choisissez la date"
+                    tools:ignore="SpeakableTextPresentCheck"/>
 
                 <!--<EditText
                     android:id="@+id/editTextDateFilter"

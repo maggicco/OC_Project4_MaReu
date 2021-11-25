@@ -1,13 +1,18 @@
 package com.oc.mareu.ui.mareu;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -17,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -26,6 +32,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 
 
@@ -33,6 +40,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
@@ -42,8 +50,6 @@ import com.oc.mareu.service.DummyMeetingApiService;
 import com.oc.mareu.service.MeetingApiService;
 import com.oc.mareu.ui.mareu.ListMeetingRecyclerViewAdapter;
 
-
-
 public class ListMeetingActivity extends AppCompatActivity {
 
     private ViewPager mPager;
@@ -52,10 +58,11 @@ public class ListMeetingActivity extends AppCompatActivity {
     private CardView cardView;
     private List<Meeting> mMeeting;
     private MeetingApiService mApiService;
+    private TextView meetingDateFilter;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
     //ListMeetingRecyclerViewAdapter adapter;
     ArrayAdapter<Meeting> adapter;
     String[] categories={"All","Réunion 1","Réunion 2"};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +71,12 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         setRoomSpinner();
 
+        meetingDateFilter = findViewById(R.id.textView_DateFilter);
+
         mPager = findViewById(R.id.container);
 
         mPagerAdapter = new ListMeetingPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-
-
 
         FloatingActionButton fab = findViewById(R.id.add_meeting);
 
@@ -80,33 +87,69 @@ public class ListMeetingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /**
+         * DatePicker for Filter
+         */
+
+        meetingDateFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        ListMeetingActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        day, month, year
+                );
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+            }
+
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                month = month + 1;
+                Log.d(TAG, "onDateSet: dd/mm/yyy" + dayOfMonth + "/" + month + "/" +year);
+                String date = dayOfMonth + "/" + month + "/" + year;
+                meetingDateFilter.setText(date);
+
+            }
+
+        };
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_ressources, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.onActionViewCollapsed();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.d("newText1",query);
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.d("newText",newText);
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) searchItem.getActionView();
+//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//        searchView.onActionViewCollapsed();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Log.d("newText1",query);
+//                return false;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                Log.d("newText",newText);
+//                adapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -147,7 +190,6 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     }
 
-    // TODO: 03/08/2021 restart activity after orientation changed
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -172,7 +214,6 @@ public class ListMeetingActivity extends AppCompatActivity {
     ListView myListView;
     Spinner mySpinner;
 
-
     /**
      * setRoomSpinner method
      */
@@ -187,9 +228,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapterRoom);
 
+
     }
-
-
-
-
 }

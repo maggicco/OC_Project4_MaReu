@@ -16,6 +16,18 @@ public interface MeetingApiService {
     List<Meeting> getMeetings();
 
     /**
+     * Get all Meetings filtered by date
+     * @return {@link List}
+     */
+    List<Meeting> getFilteredByDateMeetings(String meetingDate);
+
+    /**
+     * Get all Meetings filtered by room
+     * @return {@link List}
+     */
+    List<Meeting> getFilteredByRoomMeetings(String roomName);
+
+    /**
      * Create a meeting
      * @param meeting
      */
@@ -26,6 +38,5 @@ public interface MeetingApiService {
      * @param meeting
      */
     void deleteMeeting(Meeting meeting);
-
 
 }
