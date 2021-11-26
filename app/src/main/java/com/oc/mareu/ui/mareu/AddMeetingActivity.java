@@ -38,6 +38,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeSet;
+import java.util.function.ToDoubleBiFunction;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
@@ -51,9 +52,12 @@ public class AddMeetingActivity extends AppCompatActivity {
     private Button addMeeting;
     private Button addMembers;
     private Button showSet;
+    private String meetingMembersComb;
     private MeetingApiService mApiService;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+    // TODO: 25/11/2021 use
+    private StringBuilder meetingMembersSbf;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
@@ -98,6 +102,18 @@ public class AddMeetingActivity extends AppCompatActivity {
                 arrayList.add(meetingMembers.getText().toString());
                 //check if your adapter has changed
                 adapter.notifyDataSetChanged();
+                meetingMembers.getText().clear();
+
+                StringBuilder sbf = new StringBuilder("");
+
+                for (String multiMember: arrayList) {
+                    /* Here it appends the char argument as
+                    string to the StringBuilder */
+                    sbf.append(multiMember + " , ");
+                }
+                //Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
+                //add result to textView and put it to object
+                meetingMembersComb = sbf.toString();
 
             }
         });
@@ -105,25 +121,30 @@ public class AddMeetingActivity extends AppCompatActivity {
         /**
          * get listView items to string
          */
-        showSet = findViewById(R.id.button_show_set);
-        showSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StringBuilder sbf = new StringBuilder("");
-
-                for (String multiMember: arrayList) {
-                    /* Here it appends the char argument as
-                    string to the StringBuilder */
-                    sbf.append(multiMember + " , ");
-        }
-                Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
-            }
-        });
+//        showSet = findViewById(R.id.button_show_set);
+//        showSet.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                StringBuilder sbf = new StringBuilder("");
+//
+////                for (int i = 1; i < arrayList.size(); i++) {
+////                    sbf.append("-").append(arrayList.get(i));
+////                }
+//                for (String multiMember: arrayList) {
+//                    /* Here it appends the char argument as
+//                    string to the StringBuilder */
+//                    sbf.append(multiMember + " , ");
+//        }
+//                //Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
+//                //add result to textView and put it to object
+//                meetingMembersComb = sbf.toString();
+//                Toast.makeText(getApplicationContext(), meetingMembersComb, Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         /**
          * DatePicker
          */
-
         meetingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +179,6 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         };
 
-
         /**
          * Timepicker
          */
@@ -175,6 +195,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mTimeSetListener,
                         hour, minute, true
+               
                 );
 
                 timePickerDialog.show();
@@ -225,7 +246,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                 meetingDate.getText().toString(),
                 meetingHour.getText().toString(),
                 meetingCreator.getText().toString(),
-                meetingMembers.getText().toString()
+                meetingMembersComb
                 );
 
         mApiService.createMeeting(newMeeting);

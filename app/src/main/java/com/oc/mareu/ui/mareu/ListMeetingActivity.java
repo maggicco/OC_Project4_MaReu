@@ -129,26 +129,11 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_ressources, menu);
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//        searchView.onActionViewCollapsed();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                Log.d("newText1",query);
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                Log.d("newText",newText);
-//                adapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
         return true;
+
     }
 
     @Override
@@ -227,7 +212,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         adapterRoom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapterRoom);
-
 
     }
 }
