@@ -51,6 +51,12 @@
                     android:layout_margin="10dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
+                <Button
+                    android:id="@+id/roomFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Filtrer par salle"/>
+
                 <TextView
                     android:id="@+id/textViewFilter"
                     android:layout_width="match_parent"
@@ -70,29 +76,11 @@
                     android:hint="choisissez la date"
                     tools:ignore="SpeakableTextPresentCheck"/>
 
-                <!--<EditText
-                    android:id="@+id/editTextDateFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"/>
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Filtrer les réunions par lieu" />
-
-                <EditText
-                    android:id="@+id/editTextRoomFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"/>
-
                 <Button
-                    android:id="@+id/buttonFilter"
+                    android:id="@+id/dateFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Filtrer les réunions " />-->
+                    android:text="Filtrer par Date " />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

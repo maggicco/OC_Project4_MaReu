@@ -88,12 +88,6 @@
                         android:layout_height="wrap_content"/>
 
                     <Button
-                        android:id="@+id/button_show_set"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="SHOW"/>
-
-                    <Button
                         android:id="@+id/button_add_meeting"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
