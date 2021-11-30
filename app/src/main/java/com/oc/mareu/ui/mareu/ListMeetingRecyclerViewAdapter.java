@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMeetingRecyclerViewAdapter.ViewHolder>
-implements Filterable{
+{
 
     private List<Meeting> mMeetings;
     private List<Meeting> mMeetingsFullList;
@@ -138,43 +138,43 @@ implements Filterable{
 //            notifyDataSetChanged();
 //        }
 //    };
-
-    @Override
-    public Filter getFilter() {
-        return Searched_Filter;
-    }
-
-    private Filter Searched_Filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-
-            ArrayList<Meeting> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mMeetingsFullList);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Meeting item : mMeetingsFullList) {
-                    if (item.getRoomName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-
-            mMeetings.clear();
-            mMeetings.addAll((ArrayList) results.values);
-            notifyDataSetChanged();
-
-        }
-    };
+//
+//    @Override
+//    public Filter getFilter() {
+//        return Searched_Filter;
+//    }
+//
+//    private Filter Searched_Filter = new Filter() {
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//
+//            ArrayList<Meeting> filteredList = new ArrayList<>();
+//
+//            if (constraint == null || constraint.length() == 0) {
+//                filteredList.addAll(mMeetingsFullList);
+//            } else {
+//                String filterPattern = constraint.toString().toLowerCase().trim();
+//                for (Meeting item : mMeetingsFullList) {
+//                    if (item.getRoomName().toLowerCase().contains(filterPattern)) {
+//                        filteredList.add(item);
+//                    }
+//                }
+//            }
+//
+//            FilterResults results = new FilterResults();
+//            results.values = filteredList;
+//            return results;
+//
+//        }
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//
+//            mMeetings.clear();
+//            mMeetings.addAll((ArrayList) results.values);
+//            notifyDataSetChanged();
+//
+//        }
+//    };
 }
 
 
