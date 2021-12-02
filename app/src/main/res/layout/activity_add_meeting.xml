@@ -33,6 +33,8 @@
                         android:id="@+id/spinner_color"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="7dp"
+                        android:background="@color/grey"
                         android:minHeight="32dp"
                         android:autofillHints="Color"
                         tools:ignore="SpeakableTextPresentCheck"/>
@@ -41,6 +43,8 @@
                         android:id="@+id/spinner_room"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@color/grey"
                         android:minHeight="40dp"
                         tools:ignore="SpeakableTextPresentCheck"/>
 
@@ -48,7 +52,9 @@
                         android:id="@+id/textView_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:gravity="center"
+                        android:background="@color/grey"
                         android:ems="10"
                         android:minHeight="48dp"
                         android:hint="choisissez la date"
@@ -58,7 +64,9 @@
                         android:id="@+id/textView_hour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:gravity="center"
+                        android:background="@color/grey"
                         android:ems="10"
                         android:minHeight="40dp"
                         android:hint="choisissez l'heure"

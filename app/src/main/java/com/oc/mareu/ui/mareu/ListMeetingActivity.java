@@ -131,6 +131,7 @@ public class ListMeetingActivity extends AppCompatActivity {
         meetingDateFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                meetingDateFilter.setText("");
                 Calendar calendar = Calendar.getInstance();
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int month = calendar.get(Calendar.MONTH);

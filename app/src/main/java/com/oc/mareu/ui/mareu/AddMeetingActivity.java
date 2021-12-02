@@ -115,6 +115,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                meetingDate.setText("");
                 Calendar calendar = Calendar.getInstance();
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int month = calendar.get(Calendar.MONTH);
@@ -154,6 +155,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                meetingHour.setText("");
                 Calendar calendar = Calendar.getInstance();
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minute = calendar.get(Calendar.MINUTE);
@@ -175,8 +177,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                //Log.d(TAG, "onTimeSet: hh-mm" + minute + "-" + hourOfDay);
-                String date = " - " + hourOfDay + "-" + minute + " - ";
+                String date = " - " + hourOfDay + "H -" + minute + " - ";
                 meetingHour.setText(date);
 
             }
