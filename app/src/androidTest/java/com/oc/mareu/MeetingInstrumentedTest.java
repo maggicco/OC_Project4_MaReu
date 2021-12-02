@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 
 import java.util.List;
@@ -31,7 +32,7 @@ import com.oc.mareu.ui.mareu.ListMeetingActivity;
 /**
  * Instrumented test, which will execute on an Android device.
  */
-
+@RunWith(JUnit4.class)
 public class MeetingInstrumentedTest {
 
     private ListMeetingActivity mActivity;

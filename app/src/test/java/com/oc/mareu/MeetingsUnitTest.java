@@ -75,4 +75,23 @@ public class MeetingsUnitTest {
         service.deleteMeeting(meeting1);
         assertFalse(meetings.contains(meeting1));
     }
+
+    /*
+     * Test filterMeeting by room
+     */
+    @Test
+    public void filterMeetingByRoomWithSuccess() {
+        List<Meeting> meetings = service.getMeetings();
+
+    }
+
+    /*
+     * Test filterMeeting by date
+     */
+    @Test
+    public void filterMeetingByDateWithSuccess() {
+        List<Meeting> meetings = service.getMeetings();
+
+    }
+
 }
