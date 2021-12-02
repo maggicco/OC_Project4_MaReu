@@ -112,7 +112,7 @@ public class ListMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (meetingDateFilter.toString().equals("choisissez la date"))
+                if (meetingDateFilter.getText().toString().isEmpty())
                 {
                     Toast.makeText(getApplicationContext(),"Veillez chosir la date",
                             Toast.LENGTH_LONG).show();
