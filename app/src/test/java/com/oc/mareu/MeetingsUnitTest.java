@@ -4,25 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
 import java.util.List;
-import java.util.function.ToDoubleBiFunction;
-
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.*;
-
 import com.oc.mareu.model.Meeting;
 import com.oc.mareu.service.MeetingApiService;
 import com.oc.mareu.di.DI;
 
-import java.util.List;
 
 /**
  * Unit test on Meeting service
@@ -37,9 +25,9 @@ public class MeetingsUnitTest {
         service = DI.getNewInstanceMeetingApiService();
     }
 
-    /*
+    /**
      * Test getMeetings()
-     */
+     **/
     @Test
     public void getMeetingWithSuccess() {
         Meeting meeting1 = new Meeting("vert", "Réunion 1", "14/08/2021", "15-00",
@@ -76,18 +64,18 @@ public class MeetingsUnitTest {
         assertFalse(meetings.contains(meeting1));
     }
 
-    /*
+    /**
      * Test filterMeeting by room
-     */
+     **/
     @Test
     public void filterMeetingByRoomWithSuccess() {
         List<Meeting> meetings = service.getMeetings();
 
     }
 
-    /*
+    /**
      * Test filterMeeting by date
-     */
+     **/
     @Test
     public void filterMeetingByDateWithSuccess() {
         List<Meeting> meetings = service.getMeetings();
