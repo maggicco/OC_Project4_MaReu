@@ -23,6 +23,8 @@ import android.view.MenuItem;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 
@@ -134,6 +136,7 @@ public class ListMeetingActivity extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
+                Locale.setDefault(Locale.FRANCE);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         ListMeetingActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,

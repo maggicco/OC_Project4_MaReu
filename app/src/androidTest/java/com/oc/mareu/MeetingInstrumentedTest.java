@@ -4,6 +4,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,8 @@ import org.junit.runners.JUnit4;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -22,11 +25,17 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import com.oc.mareu.ui.mareu.ListMeetingActivity;
 
@@ -36,11 +45,17 @@ import com.oc.mareu.ui.mareu.ListMeetingActivity;
 @RunWith(JUnit4.class)
 public class MeetingInstrumentedTest {
 
+    private final int ITEMS_COUNT = 0;
     private ListMeetingActivity mActivity;
 
     @Rule
     public ActivityTestRule<ListMeetingActivity> mActivityRule =
             new ActivityTestRule(ListMeetingActivity.class);
+    @Before
+    public void setUp() {
+        mActivity = mActivityRule.getActivity();
+        assertThat(mActivity, notNullValue());
+    }
 
 
     /**
@@ -205,6 +220,167 @@ public class MeetingInstrumentedTest {
         materialButton.perform(click());
     }
 
+    /**
+     * Testing AddMeetingActivity
+     * testing listView members
+     * and delete button in ListMeetingActivity
+     */
+    @Test
+    public void testAddMeetingAndDeleteButton() {
+
+        onView(allOf(withId(R.id.activity_meeting), isDisplayed()));
+        onView(ViewMatchers.withId(R.id.list_meetings))
+                .check(matches(hasMinimumChildCount(ITEMS_COUNT)));
+        ViewInteraction floatingActionButton = onView(
+                allOf(withId(R.id.add_meeting),
+                        childAtPosition(
+                                allOf(withId(R.id.activity_meeting),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),2),isDisplayed()));
+        floatingActionButton.perform(click());
+
+        ViewInteraction appCompatSpinner = onView(
+                allOf(withId(R.id.spinner_color),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),0)));
+        appCompatSpinner.perform(scrollTo(), click());
+
+        DataInteraction appCompatCheckedTextView = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(Matchers.is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0)).atPosition(1);
+        appCompatCheckedTextView.perform(click());
+
+        ViewInteraction appCompatSpinner2 = onView(
+                allOf(withId(R.id.spinner_room),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),1)));
+        appCompatSpinner2.perform(scrollTo(), click());
+
+        DataInteraction appCompatCheckedTextView2 = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(Matchers.is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0)).atPosition(1);
+        appCompatCheckedTextView2.perform(click());
+
+        ViewInteraction materialTextView = onView(
+                allOf(withId(R.id.textView_date),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),2)));
+        materialTextView.perform(scrollTo(), click());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("android.widget.LinearLayout")),
+                                        0),2),isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction materialTextView2 = onView(
+                allOf(withId(R.id.textView_hour),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),3)));
+        materialTextView2.perform(scrollTo(), click());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("android.widget.LinearLayout")),
+                                        0),2),isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.editText_creator),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),4)));
+        appCompatEditText.perform(scrollTo(), replaceText("Piotr"), closeSoftKeyboard());
+
+        onView(ViewMatchers.withId(R.id.listView_seeMembers))
+                .check(matches(hasMinimumChildCount(ITEMS_COUNT)));
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.editText_member),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),5)));
+        appCompatEditText2.perform(scrollTo(), replaceText("mag@hotmail.fr"), closeSoftKeyboard());
+
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.button_add_members), withText("Add members"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),6)));
+        materialButton3.perform(scrollTo(), click());
+
+        onView(ViewMatchers.withId(R.id.listView_seeMembers))
+                .check(matches(hasMinimumChildCount(ITEMS_COUNT+1)));
+
+        ViewInteraction appCompatEditText3 = onView(
+                allOf(withId(R.id.editText_member),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),5)));
+        appCompatEditText3.perform(scrollTo(), click());
+
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.editText_member),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),5)));
+        appCompatEditText4.perform(scrollTo(), replaceText("whois@whois.fr"), closeSoftKeyboard());
+
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.button_add_members), withText("Add members"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),6)));
+        materialButton4.perform(scrollTo(), click());
+
+
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(R.id.button_add_meeting), withText("Save"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(Matchers.is("androidx.cardview.widget.CardView")),
+                                        0),
+                                8)));
+        materialButton6.perform(scrollTo(), click());
+
+        onView(ViewMatchers.withId(R.id.list_meetings))
+                .check(matches(hasMinimumChildCount(ITEMS_COUNT+1)));
+
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.item_delete_button),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.list_meetings),
+                                        0),
+                                5),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        onView(ViewMatchers.withId(R.id.list_meetings))
+                .check(matches(hasMinimumChildCount(ITEMS_COUNT)));
+    }
+
 
 //    /**
 //     * check toast is displayed
@@ -223,7 +399,6 @@ public class MeetingInstrumentedTest {
      * Matcher method for child position
      * @param parentMatcher
      * @param position
-     * @return
      */
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {

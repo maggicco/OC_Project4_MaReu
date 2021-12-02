@@ -3,17 +3,12 @@ package com.oc.mareu.ui.mareu;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,10 +17,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.oc.mareu.R;
 import com.oc.mareu.di.DI;
@@ -33,15 +26,10 @@ import com.oc.mareu.model.Meeting;
 import com.oc.mareu.service.MeetingApiService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
-import java.util.TreeSet;
-import java.util.function.ToDoubleBiFunction;
+import java.util.Locale;
 
 public class AddMeetingActivity extends AppCompatActivity {
-
 
     private Spinner colorSpinner;
     private Spinner roomSpinner;
@@ -51,12 +39,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     private EditText meetingMembers;
     private Button addMeeting;
     private Button addMembers;
-    private Button showSet;
     private String meetingMembersComb;
     private MeetingApiService mApiService;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-    // TODO: 25/11/2021 use
     private StringBuilder meetingMembersSbf;
     private ListView listView;
     private ArrayAdapter<String> adapter;
@@ -77,8 +63,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         roomSpinner = findViewById(R.id.spinner_room);
         meetingDate = findViewById(R.id.textView_date);
         meetingHour = findViewById(R.id.textView_hour);
-        meetingCreator = findViewById(R.id.editTextText_creator);
-        meetingMembers = findViewById(R.id.editTextText_member);
+        meetingCreator = findViewById(R.id.editText_creator);
+        meetingMembers = findViewById(R.id.editText_member);
         addMembers = findViewById(R.id.button_add_members);
 
 
@@ -120,30 +106,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
 
         /**
-         * get listView items to string
-         */
-//        showSet = findViewById(R.id.button_show_set);
-//        showSet.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                StringBuilder sbf = new StringBuilder("");
-//
-////                for (int i = 1; i < arrayList.size(); i++) {
-////                    sbf.append("-").append(arrayList.get(i));
-////                }
-//                for (String multiMember: arrayList) {
-//                    /* Here it appends the char argument as
-//                    string to the StringBuilder */
-//                    sbf.append(multiMember + " , ");
-//        }
-//                //Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
-//                //add result to textView and put it to object
-//                meetingMembersComb = sbf.toString();
-//                Toast.makeText(getApplicationContext(), meetingMembersComb, Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-        /**
          * DatePicker
          */
         meetingDate.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +116,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
+                Locale.setDefault(Locale.FRANCE);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         AddMeetingActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -238,8 +201,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         roomSpinner = findViewById(R.id.spinner_room);
         meetingDate = findViewById(R.id.textView_date);
         meetingHour = findViewById(R.id.textView_hour);
-        meetingCreator = findViewById(R.id.editTextText_creator);
-        meetingMembers = findViewById(R.id.editTextText_member);
+        meetingCreator = findViewById(R.id.editText_creator);
+        meetingMembers = findViewById(R.id.editText_member);
 
         Meeting newMeeting = new Meeting(
                 colorSpinner.getSelectedItem().toString(),

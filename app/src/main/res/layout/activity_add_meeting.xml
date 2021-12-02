@@ -16,11 +16,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/addMeetingLinearLayout">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/addMeetingCardView">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -46,6 +48,7 @@
                         android:id="@+id/textView_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:ems="10"
                         android:minHeight="48dp"
                         android:hint="choisissez la date"
@@ -55,13 +58,14 @@
                         android:id="@+id/textView_hour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:ems="10"
                         android:minHeight="48dp"
                         android:hint="choisissez l'heure"
                         tools:ignore="SpeakableTextPresentCheck"/>
 
                     <EditText
-                        android:id="@+id/editTextText_creator"
+                        android:id="@+id/editText_creator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -69,7 +73,7 @@
                         android:hint="choisissez votre nom"/>
 
                     <EditText
-                        android:id="@+id/editTextText_member"
+                        android:id="@+id/editText_member"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
