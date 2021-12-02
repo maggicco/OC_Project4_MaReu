@@ -387,19 +387,6 @@ public class MeetingInstrumentedTest {
     }
 
 
-//    /**
-//     * check toast is displayed
-//     */
-//    @Test
-//    public void chekToastMessage() {
-//
-//        onView(withId(R.id.action_search)).perform(click());
-//        onView(withId(R.id.roomFilterBtn)).perform(click());
-//        onView(withText(R.string.toast_string)).inRoot(withDecorView(not(is(getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-//
-//    }
-
-
     /**
      * Matcher method for child position
      * @param parentMatcher

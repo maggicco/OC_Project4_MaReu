@@ -99,7 +99,7 @@ public class ListMeetingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Veillez chosir une salle",
                             Toast.LENGTH_LONG).show();
                 }else {
-                    mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
+                    //mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
 
                     //notifyDataSetChanged();
                 }
@@ -117,7 +117,7 @@ public class ListMeetingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Veillez chosir la date",
                             Toast.LENGTH_LONG).show();
                 }else {
-                    mApiService.getFilteredByRoomMeetings(meetingDateFilter.toString());
+                    //mApiService.getFilteredByRoomMeetings(meetingDateFilter);
 
                     //notifyDataSetChanged();
                 }
@@ -233,8 +233,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_list_meeting);
     }
-    ListView myListView;
-    Spinner mySpinner;
 
     /**
      * setRoomSpinner method

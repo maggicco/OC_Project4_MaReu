@@ -3,7 +3,6 @@ package com.oc.mareu.ui.mareu;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
@@ -19,12 +18,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
+import android.widget.Toast;
 import com.oc.mareu.R;
 import com.oc.mareu.di.DI;
 import com.oc.mareu.model.Meeting;
 import com.oc.mareu.service.MeetingApiService;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -43,7 +41,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     private MeetingApiService mApiService;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-    private StringBuilder meetingMembersSbf;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
@@ -179,15 +176,24 @@ public class AddMeetingActivity extends AppCompatActivity {
         };
 
         /**
-         * add>NewMeeting
+         * addNewMeeting
          */
         addMeeting = findViewById(R.id.button_add_meeting);
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                addNewMeeting();
 
+                if ((colorSpinner.getSelectedItem().toString().equals("choisissez votre couleur")
+                        || (roomSpinner.getSelectedItem().toString().equals("choisissez votre salle"))
+                        || (listView.getAdapter().getCount() == 0))) {
+                    Toast.makeText(getApplicationContext(),"Veuillez remplir tous les champs obligatoires",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    addNewMeeting();
+                }
             }
         });
     }
