@@ -81,6 +81,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingMembers = findViewById(R.id.editTextText_member);
         addMembers = findViewById(R.id.button_add_members);
 
+
         /**
          *  ListView
          */

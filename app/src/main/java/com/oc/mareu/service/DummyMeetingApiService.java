@@ -45,7 +45,6 @@ public class DummyMeetingApiService implements MeetingApiService {
                 meetings.add(meeting);
 
         }
-
         return meetings;
 
     }

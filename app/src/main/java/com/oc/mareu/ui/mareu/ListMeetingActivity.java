@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 
@@ -58,11 +59,12 @@ public class ListMeetingActivity extends AppCompatActivity {
     private CardView cardView;
     private List<Meeting> mMeeting;
     private MeetingApiService mApiService;
+    private Spinner meetingRoomFilter;
+    private Button meetingRoomFilterBtn;
     private TextView meetingDateFilter;
+    private Button meetingDateFilterBtn;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    //ListMeetingRecyclerViewAdapter adapter;
     ArrayAdapter<Meeting> adapter;
-    String[] categories={"All","Réunion 1","Réunion 2"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,11 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         setRoomSpinner();
 
+        meetingRoomFilter = findViewById(R.id.spinner_room_filter);
+        meetingRoomFilterBtn = findViewById(R.id.roomFilterBtn);
+
         meetingDateFilter = findViewById(R.id.textView_DateFilter);
+        meetingDateFilterBtn = findViewById(R.id.dateFilterBtn);
 
         mPager = findViewById(R.id.container);
 
@@ -88,10 +94,45 @@ public class ListMeetingActivity extends AppCompatActivity {
             }
         });
 
+        //Filter by room button
+        meetingRoomFilterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (meetingRoomFilter.getSelectedItem().toString().equals("choisissez votre salle"))
+                {
+                    Toast.makeText(getApplicationContext(),"Veillez chosir une salle",
+                            Toast.LENGTH_LONG).show();
+                }else {
+                    mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
+
+                    //notifyDataSetChanged();
+                }
+
+            }
+        });
+
+        //Filter By date button
+        meetingDateFilterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (meetingDateFilter.toString().equals("choisissez la date"))
+                {
+                    Toast.makeText(getApplicationContext(),"Veillez chosir la date",
+                            Toast.LENGTH_LONG).show();
+                }else {
+                    mApiService.getFilteredByRoomMeetings(meetingDateFilter.toString());
+
+                    //notifyDataSetChanged();
+                }
+
+            }
+        });
+
         /**
          * DatePicker for Filter
          */
-
         meetingDateFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,22 +218,22 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+
         super.onConfigurationChanged(newConfig);
         //onRestart();
         // Checks the orientation of the screen
+
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
                     onRestart();
             mApiService = DI.getMeetingApiService();
             mApiService.getMeetings().clear();
-                    //onDestroy();
         }
          else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
             Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
             onRestart();
             mApiService = DI.getMeetingApiService();
             mApiService.getMeetings().clear();
-            //onDestroy();
         }
         setContentView(R.layout.activity_list_meeting);
     }
@@ -204,10 +245,10 @@ public class ListMeetingActivity extends AppCompatActivity {
      */
     public void setRoomSpinner() {
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_room);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_room_filter);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterRoom = ArrayAdapter.createFromResource(this,
-                R.array.spinner_room, android.R.layout.simple_spinner_item);
+                R.array.spinner_filter_room, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapterRoom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
