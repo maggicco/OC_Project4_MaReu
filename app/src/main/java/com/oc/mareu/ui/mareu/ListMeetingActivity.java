@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import android.transition.AutoTransition;
@@ -29,17 +28,13 @@ import android.transition.TransitionManager;
 
 import android.view.View;
 
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 
 
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,9 +42,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
 import com.oc.mareu.di.DI;
 import com.oc.mareu.model.Meeting;
-import com.oc.mareu.service.DummyMeetingApiService;
 import com.oc.mareu.service.MeetingApiService;
-import com.oc.mareu.ui.mareu.ListMeetingRecyclerViewAdapter;
 
 public class ListMeetingActivity extends AppCompatActivity {
 
@@ -182,7 +175,7 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_search:
-                cardView = findViewById(R.id.base_cardview);
+                cardView = findViewById(R.id.filterCardView);
 
                 hiddenView = findViewById(R.id.hidden_view);
 

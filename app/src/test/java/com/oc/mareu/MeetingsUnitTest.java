@@ -48,9 +48,9 @@ public class MeetingsUnitTest {
         assertTrue(service.getMeetings().contains(meeting1));
     }
 
-    /*
+    /**
      * Test createMeeting()
-     */
+     **/
     @Test
     public void createNewMeetingWithSuccess() {
         List<Meeting> meetings = service.getMeetings();
@@ -62,9 +62,9 @@ public class MeetingsUnitTest {
         assertFalse(meetings.contains(meeting1));
     }
 
-    /*
+    /**
      * Test deleteMeeting
-     */
+     **/
     @Test
     public void deleteMeetingWithSuccess() {
         List<Meeting> meetings = service.getMeetings();

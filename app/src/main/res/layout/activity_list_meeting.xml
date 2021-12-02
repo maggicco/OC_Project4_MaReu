@@ -16,9 +16,9 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="InvalidId">
 
-        <!--Base CardView-->
+        <!--Filter CardView-->
         <androidx.cardview.widget.CardView
-            android:id="@+id/base_cardview"
+            android:id="@+id/filterCardView"
             style="@style/Base.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

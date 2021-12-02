@@ -58,6 +58,17 @@ public class MeetingInstrumentedTest {
 
     }
 
+    /**
+     * Check if on click filter button cardView is displayed
+     */
+    @Test
+    public void filterButtonDisplayCardView() {
+
+        onView(withId(R.id.action_search)).perform(click());
+        onView(allOf(withId(R.id.filterCardView), isDisplayed()));
+
+    }
+
 
 
 }
