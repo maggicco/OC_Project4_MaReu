@@ -25,6 +25,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
@@ -284,6 +285,8 @@ public class MeetingInstrumentedTest {
                                         0),2),isDisplayed()));
         materialButton.perform(click());
 
+        onView(withId(R.id.textView_date)).check(matches(not(withText(""))));
+
         ViewInteraction materialTextView2 = onView(
                 allOf(withId(R.id.textView_hour),
                         childAtPosition(
@@ -299,6 +302,8 @@ public class MeetingInstrumentedTest {
                                         withClassName(Matchers.is("android.widget.LinearLayout")),
                                         0),2),isDisplayed()));
         materialButton2.perform(click());
+
+        onView(withId(R.id.textView_hour)).check(matches(not(withText(""))));
 
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(R.id.editText_creator),
