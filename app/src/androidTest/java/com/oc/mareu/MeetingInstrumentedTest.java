@@ -10,15 +10,23 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
@@ -41,14 +49,19 @@ public class MeetingInstrumentedTest {
     public ActivityTestRule<ListMeetingActivity> mActivityRule =
             new ActivityTestRule(ListMeetingActivity.class);
 
-    @Before
-    public void setUp() {
-        mActivity = mActivityRule.getActivity();
-        assertThat(mActivity, notNullValue());
+
+    /**
+     * Check if ListMeetingActivity starts(main application screen)
+     */
+    @Test
+    public void listMeetingActivityStarts() {
+
+        onView(allOf(withId(R.id.activity_meeting), isDisplayed()));
+
     }
 
     /**
-     * Check if activity AddMeetingActivity starts
+     * Check if AddMeetingActivity starts
      */
     @Test
     public void addMeetingActivityStarts() {
@@ -69,6 +82,33 @@ public class MeetingInstrumentedTest {
 
     }
 
+    /**
+     *  Check ColorSpinner
+     */
+    @Test
+    public void checkColorSpinner() {
+        onView(withId(R.id.add_meeting)).perform(click());
+        onView(withId(R.id.spinner_color)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("vert")))
+                .perform(click());
+        onView(withId(R.id.spinner_color))
+                .check(matches(withSpinnerText(containsString("vert"))));
+
+    }
+
+    /**
+     *  Check RoomSpinner
+     */
+    @Test
+    public void checkRoomSpinner() {
+        onView(withId(R.id.add_meeting)).perform(click());
+        onView(withId(R.id.spinner_room)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Réunion A")))
+                .perform(click());
+        onView(withId(R.id.spinner_room))
+                .check(matches(withSpinnerText(containsString("Réunion A"))));
+
+    }
 
 
 }
