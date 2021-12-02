@@ -41,7 +41,7 @@
                         android:id="@+id/spinner_room"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="48dp"
+                        android:minHeight="40dp"
                         tools:ignore="SpeakableTextPresentCheck"/>
 
                     <TextView
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:ems="10"
-                        android:minHeight="48dp"
+                        android:minHeight="40dp"
                         android:hint="choisissez l'heure"
                         tools:ignore="SpeakableTextPresentCheck"/>
 
@@ -68,15 +68,19 @@
                         android:id="@+id/editText_creator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:ems="10"
-                        android:minHeight="48dp"
+                        android:background="@color/grey"
+                        android:minHeight="40dp"
                         android:hint="choisissez votre nom"/>
 
                     <EditText
                         android:id="@+id/editText_member"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:ems="10"
+                        android:background="@color/grey"
                         android:minHeight="48dp"
                         android:hint="mail participant"/>
 

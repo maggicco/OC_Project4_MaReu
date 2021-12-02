@@ -82,23 +82,30 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //adds the data of your EditText and puts in your array
-                arrayList.add(meetingMembers.getText().toString());
-                //check if your adapter has changed
-                adapter.notifyDataSetChanged();
-                meetingMembers.getText().clear();
+                if(meetingMembers.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(),"veuillez indiquer le mails des participants",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                StringBuilder sbf = new StringBuilder("");
+                    //adds the data of your EditText and puts in your array
+                    arrayList.add(meetingMembers.getText().toString());
+                    //check if your adapter has changed
+                    adapter.notifyDataSetChanged();
+                    meetingMembers.getText().clear();
 
-                for (String multiMember: arrayList) {
+                    StringBuilder sbf = new StringBuilder("");
+
+                    for (String multiMember : arrayList) {
                     /* Here it appends the char argument as
                     string to the StringBuilder */
-                    sbf.append(multiMember + " , ");
-                }
-                //Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
-                //add result to textView and put it to object
-                meetingMembersComb = sbf.toString();
+                        sbf.append(multiMember + " , ");
+                    }
+                    //Toast.makeText(getApplicationContext(), sbf, Toast.LENGTH_LONG).show();
+                    //add result to textView and put it to object
+                    meetingMembersComb = sbf.toString();
 
+                }
             }
         });
 
@@ -186,7 +193,10 @@ public class AddMeetingActivity extends AppCompatActivity {
 
                 if ((colorSpinner.getSelectedItem().toString().equals("choisissez votre couleur")
                         || (roomSpinner.getSelectedItem().toString().equals("choisissez votre salle"))
-                        || (listView.getAdapter().getCount() == 0))) {
+                        || (listView.getAdapter().getCount() == 0)
+                        || (meetingDate.getText().toString().isEmpty())
+                        || (meetingHour.getText().toString().isEmpty())
+                        || (meetingCreator.getText().toString().isEmpty()))) {
                     Toast.makeText(getApplicationContext(),"Veuillez remplir tous les champs obligatoires",
                             Toast.LENGTH_LONG).show();
                 }
