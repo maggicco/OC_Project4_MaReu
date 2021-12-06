@@ -32,7 +32,6 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-
                 <TextView
                     android:id="@+id/textViewLieu"
                     android:layout_width="match_parent"
@@ -74,7 +73,7 @@
                     android:gravity="center"
                     android:ems="10"
                     android:minHeight="48dp"
-                    android:hint="choisissez la date"
+                    android:hint="Veuillez choisir la date"
                     tools:ignore="SpeakableTextPresentCheck"/>
 
                 <Button
@@ -91,7 +90,9 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_meeting"

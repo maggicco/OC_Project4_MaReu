@@ -2,14 +2,14 @@
 <resources>
 
     <string-array name="spinner_color">
-        <item>choisissez votre couleur</item>
+        <item>Choisissez votre couleur</item>
         <item>vert</item>
         <item>rouge</item>
         <item>orange</item>
     </string-array>
 
     <string-array name="spinner_room">
-        <item>choisissez votre salle</item>
+        <item>Choisissez votre salle</item>
         <item>Réunion A</item>
         <item>Réunion B</item>
         <item>Réunion C</item>

@@ -36,7 +36,6 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
 
     }
 
-    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -102,9 +101,7 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
     @Override
     public int getItemCount() {
 
-        // TODO: 06/12/2021 return exception :java.lang.NullPointerException: Attempt to invoke interface method 'int java.util.List.size()' on a null object reference
-        //return mMeeting.size();
-        return 0;
+        return mMeeting.size();
     }
 
 }

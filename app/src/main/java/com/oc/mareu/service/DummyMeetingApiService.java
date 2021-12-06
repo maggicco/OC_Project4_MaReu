@@ -3,7 +3,6 @@ package com.oc.mareu.service;
 import com.oc.mareu.model.Meeting;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,8 +44,8 @@ public class DummyMeetingApiService implements MeetingApiService {
                 meetings.add(meeting);
 
         }
-        return meetings;
 
+        return meetings;
     }
 
     @Override

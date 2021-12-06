@@ -23,7 +23,6 @@ public interface MeetingApiService {
 
     /**
      * Get all Meetings filtered by room
-     * @return {@link List}
      */
     List<Meeting> getFilteredByRoomMeetings(String roomName);
 

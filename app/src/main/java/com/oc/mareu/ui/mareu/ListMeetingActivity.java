@@ -17,29 +17,23 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.Menu;
-
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.ToDoubleBiFunction;
-
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
-
 import android.view.View;
-
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-
-
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,14 +44,13 @@ import com.oc.mareu.di.DI;
 import com.oc.mareu.model.Meeting;
 import com.oc.mareu.service.DummyMeetingApiService;
 import com.oc.mareu.service.MeetingApiService;
-
 import org.greenrobot.eventbus.EventBus;
 
 public class ListMeetingActivity extends AppCompatActivity {
 
     private LinearLayout hiddenView;
     private CardView cardView;
-    private List<Meeting> mMeeting;
+    //private List<Meeting> mMeeting;
     private MeetingApiService mApiService;
     private Spinner meetingRoomFilter;
     private Button meetingRoomFilterBtn;
@@ -65,6 +58,7 @@ public class ListMeetingActivity extends AppCompatActivity {
     private Button meetingDateFilterBtn;
     private RecyclerView mRecyclerView;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private List<Meeting> mMeeting = new ArrayList<>();
 
 
     @Override
@@ -72,10 +66,7 @@ public class ListMeetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
         //mApiService = DI.getMeetingApiService();
-
-
-        //TODO recyclerView empty
-        // Lookup the recyclerview in activity layout
+        
         mRecyclerView = findViewById(R.id.container);
 
         // Create adapter passing in the sample user data
@@ -105,21 +96,23 @@ public class ListMeetingActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: 06/12/2021 Filters to fix 
         //Filter by room button
         meetingRoomFilterBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View v) {
 
                 if (meetingRoomFilter.getSelectedItem().toString().equals("choisissez votre salle"))
                 {
+                    //mApiService.getMeetings();
+                    //adapter.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(),"Veillez chosir une salle",
                             Toast.LENGTH_LONG).show();
                 }else {
-                    new DummyMeetingApiService().getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
+                    //new DummyMeetingApiService().getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
                     //mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
 
-                    adapter.notifyDataSetChanged();
+                    //mRecyclerView.getAdapter().notifyDataSetChanged();;
                 }
 
             }
@@ -132,12 +125,12 @@ public class ListMeetingActivity extends AppCompatActivity {
 
                 if (meetingDateFilter.getText().toString().isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(),"Veillez chosir la date",
+                    Toast.makeText(getApplicationContext(),"Veuillez choisir la date",
                             Toast.LENGTH_LONG).show();
                 }else {
-                    //mApiService.getFilteredByRoomMeetings(meetingDateFilter);
+                    //new DummyMeetingApiService().getFilteredByRoomMeetings(meetingDateFilter.toString());
 
-                    //notifyDataSetChanged();
+                    //mRecyclerView.getAdapter().notifyDataSetChanged();;
                 }
 
             }
@@ -182,13 +175,19 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         };
     }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateMeetingList();
+    }
 
-
-
-
-
-
-
+    private void updateMeetingList() {
+        mApiService = DI.getMeetingApiService();
+        mMeeting.clear();
+        mMeeting.addAll(mApiService.getMeetings());
+        mRecyclerView.getAdapter().notifyDataSetChanged();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
