@@ -6,8 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -24,6 +27,7 @@ import android.view.MenuItem;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.ToDoubleBiFunction;
 
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -44,12 +48,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
 import com.oc.mareu.di.DI;
 import com.oc.mareu.model.Meeting;
+import com.oc.mareu.service.DummyMeetingApiService;
 import com.oc.mareu.service.MeetingApiService;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class ListMeetingActivity extends AppCompatActivity {
 
-    private ViewPager mPager;
-    private ListMeetingPagerAdapter mPagerAdapter;
     private LinearLayout hiddenView;
     private CardView cardView;
     private List<Meeting> mMeeting;
@@ -58,13 +63,27 @@ public class ListMeetingActivity extends AppCompatActivity {
     private Button meetingRoomFilterBtn;
     private TextView meetingDateFilter;
     private Button meetingDateFilterBtn;
+    private RecyclerView mRecyclerView;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    ArrayAdapter<Meeting> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
+        //mApiService = DI.getMeetingApiService();
+
+
+        //TODO recyclerView empty
+        // Lookup the recyclerview in activity layout
+        mRecyclerView = findViewById(R.id.container);
+
+        // Create adapter passing in the sample user data
+        ListMeetingRecyclerViewAdapter adapter = new ListMeetingRecyclerViewAdapter(mMeeting);
+        // Attach the adapter to the recyclerview to populate items
+        mRecyclerView.setAdapter(adapter);
+        // Set layout manager to position the items
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         setRoomSpinner();
 
@@ -74,10 +93,7 @@ public class ListMeetingActivity extends AppCompatActivity {
         meetingDateFilter = findViewById(R.id.textView_DateFilter);
         meetingDateFilterBtn = findViewById(R.id.dateFilterBtn);
 
-        mPager = findViewById(R.id.container);
-
-        mPagerAdapter = new ListMeetingPagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        //mPager = findViewById(R.id.container);
 
         FloatingActionButton fab = findViewById(R.id.add_meeting);
 
@@ -91,6 +107,7 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         //Filter by room button
         meetingRoomFilterBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View v) {
 
@@ -99,9 +116,10 @@ public class ListMeetingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Veillez chosir une salle",
                             Toast.LENGTH_LONG).show();
                 }else {
+                    new DummyMeetingApiService().getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
                     //mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
 
-                    //notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 }
 
             }
@@ -127,7 +145,7 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         /**
          * DatePicker for Filter
-         */
+         **/
         meetingDateFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +182,13 @@ public class ListMeetingActivity extends AppCompatActivity {
 
         };
     }
+
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

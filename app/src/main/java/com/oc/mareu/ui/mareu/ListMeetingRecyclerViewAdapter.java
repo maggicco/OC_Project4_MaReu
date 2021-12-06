@@ -1,6 +1,7 @@
 package com.oc.mareu.ui.mareu;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,24 +27,19 @@ import java.util.List;
 public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMeetingRecyclerViewAdapter.ViewHolder>
 {
 
-    private List<Meeting> mMeetings;
-    private List<Meeting> mMeetingsFullList;
-    private ArrayList<Meeting> dataSet;
-    private ArrayList<Meeting> FullList;
+    private final List<Meeting> mMeeting;
+
 
     public ListMeetingRecyclerViewAdapter(List<Meeting> mMeetings) {
 
-        this.mMeetings = mMeetings;
-        mMeetingsFullList = new ArrayList<>(mMeetings);
+        this.mMeeting = mMeetings;
 
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view;
-        view = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_meeting, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
@@ -53,7 +49,7 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
     @Override
     public void onBindViewHolder(ListMeetingRecyclerViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        Meeting meeting = mMeetings.get(position);
+        Meeting meeting = mMeeting.get(position);
 
         if (meeting.getColor().equals("vert")) {
             holder.mColor.setImageResource(R.drawable.ic_circle_green_1_24);
@@ -81,11 +77,6 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return mMeetings.size();
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mColor;
@@ -106,6 +97,14 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
             mDelete = itemView.findViewById(R.id.item_delete_button);
 
         }
+    }
+
+    @Override
+    public int getItemCount() {
+
+        // TODO: 06/12/2021 return exception :java.lang.NullPointerException: Attempt to invoke interface method 'int java.util.List.size()' on a null object reference
+        //return mMeeting.size();
+        return 0;
     }
 
 }

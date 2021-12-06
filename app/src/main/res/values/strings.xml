@@ -5,4 +5,5 @@
     <string name="filter_string">Filtrer les réunions par date ou par lieu</string>
     <string name="filtrer">Filtrer</string>
     <string name="Filtrer">filter</string>
+    <string name="no_data_available">no_data</string>
 </resources>
