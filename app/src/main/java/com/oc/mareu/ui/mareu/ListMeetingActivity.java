@@ -4,13 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -21,12 +17,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.ToDoubleBiFunction;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.View;
@@ -34,7 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,9 +35,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
 import com.oc.mareu.di.DI;
 import com.oc.mareu.model.Meeting;
-import com.oc.mareu.service.DummyMeetingApiService;
 import com.oc.mareu.service.MeetingApiService;
-import org.greenrobot.eventbus.EventBus;
 
 public class ListMeetingActivity extends AppCompatActivity {
 
@@ -83,8 +74,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         meetingDateFilter = findViewById(R.id.textView_DateFilter);
         meetingDateFilterBtn = findViewById(R.id.dateFilterBtn);
 
-        //mPager = findViewById(R.id.container);
-
         FloatingActionButton fab = findViewById(R.id.add_meeting);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +84,7 @@ public class ListMeetingActivity extends AppCompatActivity {
             }
         });
 
-        //Filtering by room button
+        //Filtering by room
         meetingRoomFilterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +103,7 @@ public class ListMeetingActivity extends AppCompatActivity {
             }
         });
 
-        //Filtering By date button
+        //Filtering by date
         meetingDateFilterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,9 +227,8 @@ public class ListMeetingActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
 
         super.onConfigurationChanged(newConfig);
-        //onRestart();
-        // Checks the orientation of the screen
 
+        // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
                     onRestart();

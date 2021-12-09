@@ -1,7 +1,6 @@
 package com.oc.mareu.ui.mareu;
 
 import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -63,7 +62,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         meetingCreator = findViewById(R.id.editText_creator);
         meetingMembers = findViewById(R.id.editText_member);
         addMembers = findViewById(R.id.button_add_members);
-
 
         /**
          *  ListView
@@ -191,7 +189,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                // testing fields
                 if ((colorSpinner.getSelectedItem().toString().equals("choisissez votre couleur")
                         || (roomSpinner.getSelectedItem().toString().equals("choisissez votre salle"))
                         || (listView.getAdapter().getCount() == 0)

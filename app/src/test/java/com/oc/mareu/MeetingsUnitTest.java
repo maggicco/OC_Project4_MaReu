@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import com.oc.mareu.model.Meeting;
@@ -70,7 +72,12 @@ public class MeetingsUnitTest {
     @Test
     public void filterMeetingByRoomWithSuccess() {
         List<Meeting> meetings = service.getMeetings();
-
+        Meeting meeting1 = new Meeting("vert", "Réunion 1", "14/08/2021", "15-00",
+                "Jojo", "mag@mg.fr");
+        service.createMeeting(meeting1);
+        meetings.contains("Réunion 1");
+        List<Meeting> filteredMeeting = service.getFilteredByRoomMeetings("Réunion 1");
+        assertEquals(meetings.contains("Réunion 1"), filteredMeeting.contains("Réunion 1"));
     }
 
     /**
@@ -79,7 +86,12 @@ public class MeetingsUnitTest {
     @Test
     public void filterMeetingByDateWithSuccess() {
         List<Meeting> meetings = service.getMeetings();
-
+        Meeting meeting1 = new Meeting("vert", "Réunion 1", "14/08/2021", "15-00",
+                "Jojo", "mag@mg.fr");
+        service.createMeeting(meeting1);
+        meetings.contains("14/08/2021");
+        List<Meeting> filteredMeeting = service.getFilteredByDateMeetings("14/08/2021");
+        assertEquals(meetings.contains("14/08/2021"), filteredMeeting.contains("14/08/2021"));
     }
 
 }
