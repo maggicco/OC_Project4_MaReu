@@ -50,7 +50,6 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     private LinearLayout hiddenView;
     private CardView cardView;
-    //private List<Meeting> mMeeting;
     private MeetingApiService mApiService;
     private Spinner meetingRoomFilter;
     private Button meetingRoomFilterBtn;
@@ -65,7 +64,7 @@ public class ListMeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
-        //mApiService = DI.getMeetingApiService();
+        mApiService = DI.getMeetingApiService();
         
         mRecyclerView = findViewById(R.id.container);
 
@@ -96,29 +95,26 @@ public class ListMeetingActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: 06/12/2021 Filters to fix 
-        //Filter by room button
+        //Filtering by room button
         meetingRoomFilterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (meetingRoomFilter.getSelectedItem().toString().equals("choisissez votre salle"))
                 {
-                    //mApiService.getMeetings();
-                    //adapter.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(),"Veillez chosir une salle",
                             Toast.LENGTH_LONG).show();
                 }else {
-                    //new DummyMeetingApiService().getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
-                    //mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString());
+                    mMeeting.clear();
 
-                    //mRecyclerView.getAdapter().notifyDataSetChanged();;
+                    mMeeting.addAll(mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString()));
+                    mRecyclerView.getAdapter().notifyDataSetChanged();
                 }
 
             }
         });
 
-        //Filter By date button
+        //Filtering By date button
         meetingDateFilterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +124,10 @@ public class ListMeetingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Veuillez choisir la date",
                             Toast.LENGTH_LONG).show();
                 }else {
-                    //new DummyMeetingApiService().getFilteredByRoomMeetings(meetingDateFilter.toString());
+                    mMeeting.clear();
 
-                    //mRecyclerView.getAdapter().notifyDataSetChanged();;
+                    mMeeting.addAll(mApiService.getFilteredByDateMeetings(meetingDateFilter.getText().toString()));
+                    mRecyclerView.getAdapter().notifyDataSetChanged();
                 }
 
             }

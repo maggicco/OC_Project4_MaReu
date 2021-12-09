@@ -90,8 +90,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
                     //adds the data of your EditText and puts in your array
                     arrayList.add(meetingMembers.getText().toString());
-                    //check if your adapter has changed
-                    adapter.notifyDataSetChanged();
+
                     meetingMembers.getText().clear();
 
                     StringBuilder sbf = new StringBuilder("");
@@ -105,6 +104,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                     //add result to textView and put it to object
                     meetingMembersComb = sbf.toString();
 
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
