@@ -7,7 +7,7 @@
 Java fait partie des langages de programmation puissants et de haut niveau. Le kit de développement qui l’accompagne est très riche.
 Il fonctionne dans une machine virtuelle, donc pas besoin de le recompiler pour chaque téléphone est un énorme plus et Java est facile à sécuriser.
 Ceci est une caractéristique très importante. Comme dit dans le point ci-dessus, puisque Java est le langage de programmation le plus populaire,
-un grand nombre d’outils de développement sont disponiblespour les développeurs. 
+un grand nombre d’outils de développement sont disponibles pour les développeurs. 
 Java a un énorme soutien open source, avec de nombreuses bibliothèques et outils pour rendre la vie plus facile aux développeurs.
 Android, comme système d’exploitation fonctionne sur de nombreuses plates-formes matérielles différentes, y compris les téléviseurs intelligents,
 les montres connectées, les automobiles, etc.
