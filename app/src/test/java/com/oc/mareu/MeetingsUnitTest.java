@@ -65,7 +65,6 @@ public class MeetingsUnitTest {
         assertFalse(meetings.contains(meeting1));
     }
 
-    // TODO: 10/12/2021 modify filters tests 
     /**
      * Test filterMeeting by room
      **/
@@ -75,10 +74,10 @@ public class MeetingsUnitTest {
         Meeting meeting1 = new Meeting("vert", "Réunion 1", "14/08/2021", "15-00",
                 "Jojo", "mag@mg.fr");
         service.createMeeting(meeting1);
-        meetings.contains("Réunion 1");
+        assertEquals(1, meetings.size());
         List<Meeting> filteredMeeting = service.getFilteredByRoomMeetings("Réunion 1");
-
-        assertEquals(meetings.contains("Réunion 1"), filteredMeeting.contains("Réunion 1"));
+        assertEquals(1, filteredMeeting.size());
+        assertEquals(meetings, filteredMeeting);
     }
 
     /**
@@ -90,9 +89,10 @@ public class MeetingsUnitTest {
         Meeting meeting1 = new Meeting("vert", "Réunion 1", "14/08/2021", "15-00",
                 "Jojo", "mag@mg.fr");
         service.createMeeting(meeting1);
-        meetings.contains("14/08/2021");
+        assertEquals(1, meetings.size());
         List<Meeting> filteredMeeting = service.getFilteredByDateMeetings("14/08/2021");
-        assertEquals(meetings.contains("14/08/2021"), filteredMeeting.contains("14/08/2021"));
+        assertEquals(1, filteredMeeting.size());
+        assertEquals(meetings, filteredMeeting);
     }
 
 }
