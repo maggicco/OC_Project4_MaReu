@@ -61,6 +61,7 @@ public class ListMeetingRecyclerViewAdapter extends RecyclerView.Adapter<ListMee
 
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
                 notifyItemRemoved(position);
+                //notifyDataSetChanged();
 
             }
         });

@@ -123,22 +123,6 @@ public class MeetingInstrumentedTest {
     }
 
     /**
-     * Check filter roomSpinner
-     */
-    @Test
-    public void checkFilterRoomSpinner() {
-
-        onView(withId(R.id.action_search)).perform(click());
-        onView(withId(R.id.spinner_room_filter)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Réunion A")))
-                .perform(click());
-        onView(withId(R.id.spinner_room_filter))
-                .check(matches(withSpinnerText(containsString("Réunion A"))));
-
-    }
-
-
-    /**
      * Check if DatePicker is displayed
      * and 'Ok' button works
      */
@@ -187,38 +171,6 @@ public class MeetingInstrumentedTest {
                                         0),2), isDisplayed()));
         materialButton2.perform(click());
 
-    }
-
-    /**
-     * Check if DatePicker is displayed in filter
-     * and ok button works
-     */
-    @Test
-    public void filterDatePicker() {
-
-        ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.action_search), withContentDescription("Search"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),1),0),isDisplayed()));
-        actionMenuItemView.perform(click());
-
-        ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.textView_DateFilter),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),4), isDisplayed()));
-        materialTextView.perform(click());
-
-        ViewInteraction materialButton = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(Matchers.is("android.widget.LinearLayout")),
-                                        0),2), isDisplayed()));
-        materialButton.perform(click());
     }
 
     /**
@@ -387,260 +339,51 @@ public class MeetingInstrumentedTest {
     }
 
     /**
-     * Testing AddMeetingActivity
-     * in hidden view
-     * with room filter spinner and date picker
+     * Check filter roomSpinner
      */
     @Test
-    public void filtersTesting() {
-        ViewInteraction floatingActionButton = onView(
-                allOf(withId(R.id.add_meeting),
-                        childAtPosition(
-                                allOf(withId(R.id.activity_meeting),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        floatingActionButton.perform(click());
+    public void checkFilterRoomSpinner() {
 
-        ViewInteraction appCompatSpinner = onView(
-                allOf(withId(R.id.spinner_color),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                0)));
-        appCompatSpinner.perform(scrollTo(), click());
+        onView(withId(R.id.action_search)).perform(click());
+        onView(withId(R.id.spinner_room_filter)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Réunion A")))
+                .perform(click());
+        onView(withId(R.id.spinner_room_filter))
+                .check(matches(withSpinnerText(containsString("Réunion A"))));
 
-        DataInteraction appCompatCheckedTextView = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(Matchers.is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1);
-        appCompatCheckedTextView.perform(click());
+    }
 
-        ViewInteraction appCompatSpinner2 = onView(
-                allOf(withId(R.id.spinner_room),
+
+    /**
+     * Check if DatePicker is displayed in filter
+     * and ok button works
+     */
+    @Test
+    public void filterDatePicker() {
+
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.action_search), withContentDescription("Search"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                1)));
-        appCompatSpinner2.perform(scrollTo(), click());
-
-        DataInteraction appCompatCheckedTextView2 = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(Matchers.is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1);
-        appCompatCheckedTextView2.perform(click());
+                                        withId(R.id.action_bar),1),0),isDisplayed()));
+        actionMenuItemView.perform(click());
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(R.id.textView_date),
+                allOf(withId(R.id.textView_DateFilter),
                         childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                2)));
-        materialTextView.perform(scrollTo(), click());
+                                allOf(withId(R.id.hidden_view),
+                                        childAtPosition(
+                                                withId(R.id.filterCardView),
+                                                0)),4), isDisplayed()));
+        materialTextView.perform(click());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(Matchers.is("android.widget.LinearLayout")),
-                                        0),
-                                2),
-                        isDisplayed()));
+                                        0),2), isDisplayed()));
         materialButton.perform(click());
-
-        ViewInteraction materialTextView2 = onView(
-                allOf(withId(R.id.textView_hour),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                3)));
-        materialTextView2.perform(scrollTo(), click());
-
-        ViewInteraction materialButton2 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(Matchers.is("android.widget.LinearLayout")),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton2.perform(click());
-
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.editText_creator),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                4)));
-        appCompatEditText.perform(scrollTo(), replaceText("aaa"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.editText_member),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                5)));
-        appCompatEditText2.perform(scrollTo(), replaceText("AAA"), closeSoftKeyboard());
-
-        ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.button_add_members), withText("Add members"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                6)));
-        materialButton3.perform(scrollTo(), click());
-
-        ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.button_add_meeting), withText("Save"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.addMeetingCardView),
-                                        0),
-                                8)));
-        materialButton4.perform(scrollTo(), click());
-
-        ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.action_search), withContentDescription("Search"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.action_bar),
-                                        1),
-                                0),
-                        isDisplayed()));
-        actionMenuItemView.perform(click());
-
-        ViewInteraction appCompatSpinner3 = onView(
-                allOf(withId(R.id.spinner_room_filter),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatSpinner3.perform(click());
-
-        DataInteraction appCompatCheckedTextView3 = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(Matchers.is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1);
-        appCompatCheckedTextView3.perform(click());
-
-        ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.roomFilterBtn), withText("Filtrer par salle"),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        materialButton5.perform(click());
-
-        ViewInteraction materialTextView3 = onView(
-                allOf(withId(R.id.textView_DateFilter),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                4),
-                        isDisplayed()));
-        materialTextView3.perform(click());
-
-        ViewInteraction materialButton6 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(Matchers.is("android.widget.LinearLayout")),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton6.perform(click());
-
-        ViewInteraction materialButton7 = onView(
-                allOf(withId(R.id.dateFilterBtn), withText("Filtrer par Date "),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                5),
-                        isDisplayed()));
-        materialButton7.perform(click());
-
-        ViewInteraction appCompatSpinner4 = onView(
-                allOf(withId(R.id.spinner_room_filter),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatSpinner4.perform(click());
-
-        DataInteraction appCompatCheckedTextView4 = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(Matchers.is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(2);
-        appCompatCheckedTextView4.perform(click());
-
-        ViewInteraction materialButton8 = onView(
-                allOf(withId(R.id.roomFilterBtn), withText("Filtrer par salle"),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        materialButton8.perform(click());
-
-        ViewInteraction materialTextView4 = onView(
-                allOf(withId(R.id.textView_DateFilter), withText("9/12/2021"),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                4),
-                        isDisplayed()));
-        materialTextView4.perform(click());
-
-        ViewInteraction materialButton9 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(Matchers.is("android.widget.LinearLayout")),
-                                        0),
-                                2),
-                        isDisplayed()));
-        materialButton9.perform(click());
-
-        ViewInteraction materialButton10 = onView(
-                allOf(withId(R.id.dateFilterBtn), withText("Filtrer par Date "),
-                        childAtPosition(
-                                allOf(withId(R.id.hidden_view),
-                                        childAtPosition(
-                                                withId(R.id.filterCardView),
-                                                0)),
-                                5),
-                        isDisplayed()));
-        materialButton10.perform(click());
     }
 
 

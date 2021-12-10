@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -66,6 +65,7 @@ public class MeetingsUnitTest {
         assertFalse(meetings.contains(meeting1));
     }
 
+    // TODO: 10/12/2021 modify filters tests 
     /**
      * Test filterMeeting by room
      **/
@@ -77,6 +77,7 @@ public class MeetingsUnitTest {
         service.createMeeting(meeting1);
         meetings.contains("Réunion 1");
         List<Meeting> filteredMeeting = service.getFilteredByRoomMeetings("Réunion 1");
+
         assertEquals(meetings.contains("Réunion 1"), filteredMeeting.contains("Réunion 1"));
     }
 

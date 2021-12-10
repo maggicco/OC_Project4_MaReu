@@ -54,6 +54,7 @@
                     android:id="@+id/roomFilterBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="50dp"
                     android:text="Filtrer par salle"/>
 
                 <TextView
@@ -80,7 +81,15 @@
                     android:id="@+id/dateFilterBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="50dp"
                     android:text="Filtrer par Date " />
+
+                <Button
+                    android:id="@+id/fullListFilterBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="La liste complète" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

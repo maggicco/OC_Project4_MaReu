@@ -1,7 +1,6 @@
 package com.oc.mareu.ui.mareu;
 
 import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -27,6 +26,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,8 +34,12 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oc.mareu.R;
 import com.oc.mareu.di.DI;
+import com.oc.mareu.event.DeleteMeetingEvent;
 import com.oc.mareu.model.Meeting;
 import com.oc.mareu.service.MeetingApiService;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class ListMeetingActivity extends AppCompatActivity {
 
@@ -46,6 +50,8 @@ public class ListMeetingActivity extends AppCompatActivity {
     private Button meetingRoomFilterBtn;
     private TextView meetingDateFilter;
     private Button meetingDateFilterBtn;
+    private Button fullListButton;
+    private ImageButton mDeleteButton;
     private RecyclerView mRecyclerView;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private List<Meeting> mMeeting = new ArrayList<>();
@@ -74,6 +80,10 @@ public class ListMeetingActivity extends AppCompatActivity {
         meetingDateFilter = findViewById(R.id.textView_DateFilter);
         meetingDateFilterBtn = findViewById(R.id.dateFilterBtn);
 
+        fullListButton = findViewById(R.id.fullListFilterBtn);
+
+        mDeleteButton = findViewById(R.id.item_delete_button);
+
         FloatingActionButton fab = findViewById(R.id.add_meeting);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +105,6 @@ public class ListMeetingActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 }else {
                     mMeeting.clear();
-
                     mMeeting.addAll(mApiService.getFilteredByRoomMeetings(meetingRoomFilter.getSelectedItem().toString()));
                     mRecyclerView.getAdapter().notifyDataSetChanged();
                 }
@@ -114,7 +123,6 @@ public class ListMeetingActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 }else {
                     mMeeting.clear();
-
                     mMeeting.addAll(mApiService.getFilteredByDateMeetings(meetingDateFilter.getText().toString()));
                     mRecyclerView.getAdapter().notifyDataSetChanged();
                 }
@@ -160,8 +168,37 @@ public class ListMeetingActivity extends AppCompatActivity {
             }
 
         };
+
+        fullListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMeeting.clear();
+                mMeeting.addAll(mApiService.getMeetings());
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+        });
+
     }
-    
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onDelete(DeleteMeetingEvent event) {
+        mApiService.deleteMeeting(event.meeting);
+        updateMeetingList();
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
