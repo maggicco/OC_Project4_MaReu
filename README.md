@@ -13,3 +13,4 @@ Android, comme système d’exploitation fonctionne sur de nombreuses plates-for
 les montres connectées, les automobiles, etc.
 Java est un écosystème absolument gigantesque avec des outils et des bibliothèques matures, riches et très variés, ce qui atténue les faiblesses du langage en lui-même. 
 Une application mobile Android codée en Java est plus sûre et plus stable. Il est robuste (gère automatiquement la mémoire, les erreurs).
+Et pour conclure, le langage Java s’impose dans mon parcours de Développeur d'application - Android.
